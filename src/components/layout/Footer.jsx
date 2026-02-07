@@ -1,24 +1,15 @@
+import styles from "./Footer.module.css";
+
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="container footer__inner">
-        <div>
-          <div className="footer__brand">TWV Viola</div>
-          <div className="muted tiny">
-            Toilettenwagenvermietung – Anlieferung, Abholung, Endreinigung
-          </div>
-        </div>
+    <footer className={styles.footer}>
+      <div className={`container ${styles.inner}`}>
+        <div className={styles.brand}>TWV Viola</div>
 
-        <div className="footer__links">
+        <div className={styles.links}>
           <a href="#kontakt">Kontakt</a>
-          <span className="muted">•</span>
-          <a href="/impressum" onClick={(e) => e.preventDefault()}>
-            Impressum (später)
-          </a>
-          <span className="muted">•</span>
-          <a href="/datenschutz" onClick={(e) => e.preventDefault()}>
-            Datenschutz (später)
-          </a>
+          <a href="#datenschutz">Datenschutz</a>
+          <a href="#impressum">Impressum</a>
         </div>
       </div>
     </footer>

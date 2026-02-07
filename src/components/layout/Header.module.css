@@ -1,0 +1,64 @@
+/* Header.module.css */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.84);
+  border-bottom: 1px solid rgba(20, 28, 40, 0.12);
+  box-shadow: 0 10px 26px rgba(20, 28, 40, 0.08);
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 30px rgba(20, 28, 40, 0.10);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1320px, calc(100% - 64px));
+  margin: 0 auto;
+
+  /* Header größer */
+  padding: 20px 0;
+}
+
+.logo {
+  font-weight: 860;
+  letter-spacing: 0.2px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+
+  /* TWV Viola größer */
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cta :global(.btn) {
+  padding: 16px 32px;
+  font-size: 17px;
+  font-weight: 700;
+  min-height: 50px;
+}
+
+.cta :global(.btn--primary) {
+  border: 2px solid rgba(30, 110, 255, 0.55);
+  background: rgba(30, 110, 255, 0.16);
+}
+
+.cta :global(.btn--primary:hover) {
+  background: rgba(30, 110, 255, 0.26);
+  border-color: rgba(30, 110, 255, 0.75);
+  box-shadow: 0 10px 24px rgba(30, 110, 255, 0.18);
+  transform: translateY(-1px);
+}

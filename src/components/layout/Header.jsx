@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { scrollToId } from "../../utils/scrollToId";
+import styles from "./Header.module.css";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -11,35 +12,24 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const goKontakt = () => {
-    scrollToId("kontakt", 92);
-  };
+  const go = (id) => scrollToId(id, 92);
 
   return (
-    <header className={`header ${scrolled ? "header--scrolled" : ""}`}>
-      <div className="header__inner">
-
-        {/* LOGO / NAME LINKS */}
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+      <div className={styles.inner}>
         <button
-          className="header__logo"
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+          className={styles.logo}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Zur Startseite"
         >
           TWV Viola
         </button>
 
-        {/* CTA RECHTS */}
-        <div className="header__cta">
-          <button
-            className="btn btn--primary"
-            onClick={goKontakt}
-          >
+        <div className={styles.cta}>
+          <button className="btn btn--primary" onClick={() => go("kontakt")}>
             Anfrage
           </button>
         </div>
-
       </div>
     </header>
   );

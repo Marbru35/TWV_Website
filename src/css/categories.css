@@ -1,0 +1,182 @@
+/* =========================
+   Categories – Flat / White
+   ========================= */
+
+.toiletIntro--flat {
+  background: #f2f4f7;
+  padding: 100px 0;
+  color: rgba(20, 28, 40, 0.92);
+}
+
+/* Was suchen Sie */
+.searchBlock--left {
+  max-width: 100%;
+  margin: 0 0 60px;
+  text-align: left;
+}
+
+.searchTitle {
+  font-size: clamp(38px, 4.5vw, 60px);
+  line-height: 1.05;
+  margin: 0 0 14px;
+  letter-spacing: -0.3px;
+  color: rgba(20, 28, 40, 0.95);
+}
+
+.searchText {
+  max-width: 100%;
+  margin: 0;
+  font-size: 22px;
+  line-height: 2;
+  color: rgba(20, 28, 40, 0.95);
+}
+
+/* Unsere Toilettenwagen */
+.toiletIntroTitle {
+  font-size: 45px;
+  line-height: 1.1;
+  margin: 0 0 28px;
+  letter-spacing: -0.2px;
+  color: rgba(20, 28, 40, 0.95);
+}
+
+/* Grid: immer 1 Spalte */
+.toiletCategories--flat {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+/* Card */
+.toiletCard--flat {
+  position: relative;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 16px;
+  border: 1px solid rgba(20, 28, 40, 0.08);
+  box-shadow: 0 14px 34px rgba(20, 28, 40, 0.1);
+
+  padding: 34px 32px 30px;
+  overflow: hidden;
+
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* Blauer Streifen */
+.toiletCard--flat::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: #000080;
+}
+
+/* Hover */
+.toiletCard--flat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 56px rgba(20, 28, 40, 0.14);
+}
+
+/* Layout in der Karte */
+.toiletCardLayout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.05fr) minmax(300px, 0.95fr);
+  gap: 28px;
+  align-items: stretch; /* 🔑 Bild auf volle Höhe */
+}
+
+/* Textbereich */
+.toiletCardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.toiletCard--flat h3 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 750;
+  letter-spacing: -0.2px;
+  color: rgba(20, 28, 40, 0.95);
+}
+
+.toiletCard--flat p {
+  margin: 0 0 22px;
+  font-size: 20px;
+  line-height: 1.65;
+  color: rgba(20, 28, 40, 0.68);
+}
+
+/* CTA */
+.toiletCardActions {
+  margin-top: 8px;
+}
+
+.toiletBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 22px;
+  border-radius: 999px;
+
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.1px;
+
+  text-decoration: none;
+  user-select: none;
+
+  border: 1px solid rgba(0, 0, 128, 0.35);
+  color: rgba(20, 28, 40, 0.92);
+  background: rgba(0, 0, 128, 0.12);
+
+  transition: background 140ms ease, box-shadow 140ms ease,
+    transform 140ms ease, border-color 140ms ease;
+}
+
+.toiletBtn:hover {
+  background: rgba(0, 0, 128, 0.18);
+  border-color: rgba(0, 0, 128, 0.45);
+  box-shadow: 0 14px 26px rgba(20, 28, 40, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Bildbereich: volle Höhe */
+.toiletCardImage {
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+
+  background: rgba(245, 247, 250, 0.9);
+  border: 1px solid rgba(20, 28, 40, 0.08);
+}
+
+.toiletCardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔑 füllt gesamte Fläche */
+  display: block;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 900px) {
+  .toiletCardLayout {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto 1fr; /* 🔑 Text oben, Bild füllt Rest */
+  }
+
+  .toiletCardImage {
+    height: auto;
+    min-height: 280px; /* Sicherheitswert für sehr kurze Inhalte */
+  }
+}
+
+@media (max-width: 520px) {
+  .toiletCardImage {
+    min-height: 320px; /* Mobile darf „bildiger“ sein */
+  }
+}
+

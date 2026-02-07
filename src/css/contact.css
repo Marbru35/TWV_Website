@@ -1,0 +1,32 @@
+/* Kontakt: Abstand Hinweis -> Formular */
+.contactHint {
+  margin-bottom: 14px;
+}
+
+/* =========================
+   Kontakt – Navy Background
+   ========================= */
+
+.contactSection {
+  background: #0b1b3a;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.contactSection h2 {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.contactSection .muted {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Cards bleiben hell */
+.contactSection .card {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(20, 28, 40, 0.10);
+}
+
+/* muted/tiny in Card wieder dunkel */
+.contactSection .card .muted {
+  color: rgba(20, 28, 40, 0.66);
+}
