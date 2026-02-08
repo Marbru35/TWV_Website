@@ -1,9 +1,59 @@
-import autarkImg from "../../assets/autark_interior.jpeg";
-import nonAutarkImg from "../../assets/non_autark_interior.jpeg";
-import nonAutarkImg111 from "../../assets/non_autark_1_1_1.jpeg";
-import nonAutarkImg313 from "../../assets/non_autark_3_1_3.jpeg";
+import { useEffect, useMemo, useState } from "react";
+import { models } from "../../data/models";
 
 export default function Categories() {
+  const [activeSlug, setActiveSlug] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeModel = useMemo(
+    () => models.find((m) => m.slug === activeSlug) || null,
+    [activeSlug]
+  );
+
+  const isOpen = !!activeModel;
+
+  function openModel(slug) {
+    setActiveSlug(slug);
+    setActiveIndex(0);
+  }
+
+  function close() {
+    setActiveSlug(null);
+    setActiveIndex(0);
+  }
+
+  function next() {
+    if (!activeModel) return;
+    setActiveIndex((i) => (i + 1) % activeModel.gallery.length);
+  }
+
+  function prev() {
+    if (!activeModel) return;
+    setActiveIndex((i) => (i - 1 + activeModel.gallery.length) % activeModel.gallery.length);
+  }
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Scroll lock
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, activeSlug]);
+
   return (
     <section className="toiletIntro--flat">
       <div className="container">
@@ -17,89 +67,102 @@ export default function Categories() {
           </p>
         </div>
 
-        {/* Unsere Toilettenwägen */}
         <h2 className="toiletIntroTitle">Unsere Toilettenwagen</h2>
 
         <div className="toiletCategories--flat">
-          {/* 1️⃣ Anschluss – Modell 3-1-3 */}
-          <article className="toiletCard--flat">
-            <div className="toiletCardLayout">
-              <div className="toiletCardContent">
-                <h3>Toilettenwagen mit Anschluss - Modell 3-1-3</h3>
-                <p>Mit direktem Frisch- und Abwasseranschluss.</p>
+          {models.map((m) => (
+            <article className="toiletCard--flat" key={m.slug}>
+              <div className="toiletCardLayout">
+                <div className="toiletCardContent">
+                  <h3>{m.title}</h3>
+                  <p>{m.lead}</p>
 
-                <div className="toiletCardActions">
-                  <a
-                    className="toiletBtn toiletBtn--primary"
-                    href="/toilettenwagen/anschluss-3-1-3"
-                  >
-                    Details ansehen
-                  </a>
+                  <div className="toiletCardActions">
+                    <button
+                      className="toiletBtn"
+                      type="button"
+                      onClick={() => openModel(m.slug)}
+                    >
+                      Details ansehen
+                    </button>
+                  </div>
+                </div>
+
+                <div className="toiletCardImage" aria-hidden="true">
+                  <img src={m.gallery[0].src} alt={m.gallery[0].alt} />
                 </div>
               </div>
-
-              <div className="toiletCardImage">
-                <img
-                  src={nonAutarkImg313}
-                  alt="Toilettenwagen mit Anschluss Innenraum"
-                />
-              </div>
-            </div>
-          </article>
-
-          {/* 2️⃣ Anschluss – Modell 1-1-1 */}
-          <article className="toiletCard--flat">
-            <div className="toiletCardLayout">
-              <div className="toiletCardContent">
-                <h3>Toilettenwagen mit Anschluss - Modell 1-1-1</h3>
-                <p>Mit direktem Frisch- und Abwasseranschluss.</p>
-
-                <div className="toiletCardActions">
-                  <a
-                    className="toiletBtn toiletBtn--primary"
-                    href="/toilettenwagen/anschluss-1-1-1"
-                  >
-                    Details ansehen
-                  </a>
-                </div>
-              </div>
-
-              <div className="toiletCardImage">
-                <img
-                  src={nonAutarkImg111}
-                  alt="Toilettenwagen mit Anschluss Innenraum"
-                />
-              </div>
-            </div>
-          </article>
-
-          {/* 3️⃣ Autark – Modell 1-1-1 */}
-          <article className="toiletCard--flat">
-            <div className="toiletCardLayout">
-              <div className="toiletCardContent">
-                <h3>Autarker Toilettenwagen - Modell 1-1-1</h3>
-                <p>Mit integriertem Frisch- und Abwassertank.</p>
-
-                <div className="toiletCardActions">
-                  <a
-                    className="toiletBtn toiletBtn--primary"
-                    href="/toilettenwagen/autark-1-1-1"
-                  >
-                    Details ansehen
-                  </a>
-                </div>
-              </div>
-
-              <div className="toiletCardImage">
-                <img
-                  src={autarkImg}
-                  alt="Autarker Toilettenwagen Innenraum"
-                />
-              </div>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
       </div>
+
+      {/* MODAL / SLIDER */}
+      {isOpen && activeModel && (
+        <div className="twModal" onClick={close} role="dialog" aria-modal="true">
+          <div className="twModalInner" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="twModalClose"
+              type="button"
+              onClick={close}
+              aria-label="Schließen"
+            >
+              ✕
+            </button>
+
+            <div className="twModalHeader">
+              <div className="twModalTitle">{activeModel.title}</div>
+              <div className="twModalLead">{activeModel.lead}</div>
+            </div>
+
+            <div className="twModalStage">
+              {activeModel.gallery.length > 1 && (
+                <button
+                  className="twNav twPrev"
+                  type="button"
+                  onClick={prev}
+                  aria-label="Vorheriges Bild"
+                >
+                  ‹
+                </button>
+              )}
+
+              <img
+                className="twModalImg"
+                src={activeModel.gallery[activeIndex].src}
+                alt={activeModel.gallery[activeIndex].alt}
+              />
+
+              {activeModel.gallery.length > 1 && (
+                <button
+                  className="twNav twNext"
+                  type="button"
+                  onClick={next}
+                  aria-label="Nächstes Bild"
+                >
+                  ›
+                </button>
+              )}
+            </div>
+
+            {activeModel.gallery.length > 1 && (
+              <div className="twThumbRow">
+                {activeModel.gallery.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`twThumb ${i === activeIndex ? "isActive" : ""}`}
+                    onClick={() => setActiveIndex(i)}
+                    aria-label={`Bild ${i + 1} anzeigen`}
+                  >
+                    <img src={img.src} alt={img.alt} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

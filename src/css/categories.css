@@ -40,28 +40,27 @@
   color: rgba(20, 28, 40, 0.95);
 }
 
-/* Grid: immer 1 Spalte */
+/* Grid */
 .toiletCategories--flat {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 48px;
 }
 
-/* Card */
+/* =========================
+   Card
+   ========================= */
+
 .toiletCard--flat {
   position: relative;
   background: rgba(255, 255, 255, 0.94);
   border-radius: 16px;
   border: 1px solid rgba(20, 28, 40, 0.08);
   box-shadow: 0 14px 34px rgba(20, 28, 40, 0.1);
-
-  padding: 34px 32px 30px;
+  padding: 40px 32px 36px;
   overflow: hidden;
-
-  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-/* Blauer Streifen */
 .toiletCard--flat::before {
   content: "";
   position: absolute;
@@ -70,21 +69,14 @@
   background: #000080;
 }
 
-/* Hover */
-.toiletCard--flat:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 26px 56px rgba(20, 28, 40, 0.14);
-}
-
-/* Layout in der Karte */
+/* Layout */
 .toiletCardLayout {
   display: grid;
   grid-template-columns: minmax(320px, 1.05fr) minmax(300px, 0.95fr);
-  gap: 28px;
-  align-items: stretch; /* 🔑 Bild auf volle Höhe */
+  gap: 30px;
+  align-items: stretch;
 }
 
-/* Textbereich */
 .toiletCardContent {
   display: flex;
   flex-direction: column;
@@ -95,88 +87,240 @@
   margin: 0 0 10px;
   font-size: 30px;
   font-weight: 750;
-  letter-spacing: -0.2px;
-  color: rgba(20, 28, 40, 0.95);
 }
 
 .toiletCard--flat p {
   margin: 0 0 22px;
   font-size: 20px;
   line-height: 1.65;
-  color: rgba(20, 28, 40, 0.68);
 }
 
-/* CTA */
-.toiletCardActions {
-  margin-top: 8px;
-}
-
+/* Button */
 .toiletBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
   padding: 14px 22px;
   border-radius: 999px;
-
   font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.1px;
-
-  text-decoration: none;
-  user-select: none;
-
+  font-size: 17px;
   border: 1px solid rgba(0, 0, 128, 0.35);
-  color: rgba(20, 28, 40, 0.92);
   background: rgba(0, 0, 128, 0.12);
-
-  transition: background 140ms ease, box-shadow 140ms ease,
-    transform 140ms ease, border-color 140ms ease;
+  cursor: pointer;
 }
 
-.toiletBtn:hover {
-  background: rgba(0, 0, 128, 0.18);
-  border-color: rgba(0, 0, 128, 0.45);
-  box-shadow: 0 14px 26px rgba(20, 28, 40, 0.12);
-  transform: translateY(-1px);
-}
-
-/* Bildbereich: volle Höhe */
+/* Bild – Desktop */
 .toiletCardImage {
-  height: 100%;
   border-radius: 14px;
   overflow: hidden;
-
-  background: rgba(245, 247, 250, 0.9);
-  border: 1px solid rgba(20, 28, 40, 0.08);
+  height: 100%;
 }
 
 .toiletCardImage img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 🔑 füllt gesamte Fläche */
+  object-fit: cover; /* Desktop: schön flächig */
   display: block;
 }
 
 /* =========================
-   Responsive
+   RESPONSIVE CARDS
    ========================= */
 
+/* Tablet & Mobile: Bild unter Text */
 @media (max-width: 900px) {
   .toiletCardLayout {
     grid-template-columns: 1fr;
-    grid-auto-rows: auto 1fr; /* 🔑 Text oben, Bild füllt Rest */
+    gap: 18px;
   }
 
   .toiletCardImage {
     height: auto;
-    min-height: 280px; /* Sicherheitswert für sehr kurze Inhalte */
+  }
+
+  .toiletCardImage img {
+    width: 100%;
+    height: auto;          /* ✅ volle Bildhöhe */
+    object-fit: contain;   /* ✅ nichts abschneiden */
   }
 }
 
+/* Small Mobile */
 @media (max-width: 520px) {
-  .toiletCardImage {
-    min-height: 320px; /* Mobile darf „bildiger“ sein */
+  .toiletIntro--flat {
+    padding: 70px 0;
+  }
+
+  .searchBlock--left {
+    margin-bottom: 42px;
+  }
+
+  .toiletIntroTitle {
+    font-size: 32px;
+  }
+
+  .toiletCard--flat {
+    padding: 28px 20px 22px;
+  }
+
+  .toiletCard--flat h3 {
+    font-size: 24px;
+  }
+
+  .toiletCard--flat p {
+    font-size: 18px;
+  }
+
+  .toiletBtn {
+    width: 100%;
+  }
+
+  .toiletCardImage img {
+    height: auto;
+    object-fit: contain;
   }
 }
 
+/* =========================
+   MODAL / SLIDER
+   ========================= */
+
+.twModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 24, 0.78);
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.twModalInner {
+  width: min(1200px, 96vw);
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+
+/* Header */
+.twModalHeader {
+  padding: 32px 36px 22px;
+  border-bottom: 1px solid rgba(20, 28, 40, 0.08);
+}
+
+.twModalTitle {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: rgba(20, 28, 40, 0.96);
+}
+
+.twModalLead {
+  margin-top: 8px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(20, 28, 40, 0.7);
+}
+
+.twModalClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(20, 28, 40, 0.14);
+  background: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Stage */
+.twModalStage {
+  background: #0b1020;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  min-height: 72vh;
+}
+
+.twModalImg {
+  max-width: 100%;
+  max-height: calc(72vh - 64px);
+  object-fit: contain;
+}
+
+/* Navigation */
+.twNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 30px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.twPrev { left: 16px; }
+.twNext { right: 16px; }
+
+/* Thumbnails */
+.twThumbRow {
+  padding: 22px 24px 26px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  background: #f6f7fa;
+  border-top: 1px solid rgba(20, 28, 40, 0.08);
+}
+
+.twThumb {
+  width: 120px;
+  height: 80px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.twThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.twThumb.isActive {
+  border-color: #000080;
+}
+
+/* Modal Mobile */
+@media (max-width: 520px) {
+  .twModalHeader {
+    padding: 22px 20px 16px;
+  }
+
+  .twModalTitle {
+    font-size: 20px;
+  }
+
+  .twModalLead {
+    font-size: 16px;
+  }
+
+  .twModalStage {
+    padding: 18px;
+    min-height: 56vh;
+  }
+
+  .twModalImg {
+    max-height: calc(56vh - 36px);
+  }
+
+  .twThumb {
+    width: 96px;
+    height: 64px;
+  }
+}

@@ -1,20 +1,14 @@
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import { Routes, Route } from "react-router-dom";
 
-import Hero from "./components/home/Hero";
-import Categories from "./components/home/Categories";
-import ContactTeaser from "./components/home/ContactTeaser";
+import HomePage from "./pages/HomePage.jsx";
+import DatenschutzPage from "./pages/DatenschutzPage.jsx";
 
 export default function App() {
   return (
-    <div className="App">
-      <Header />
-      <main>
-        <Hero />
-        <Categories />
-        <ContactTeaser />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/datenschutz" element={<DatenschutzPage />} />
+      <Route path="*" element={<HomePage />} />
+    </Routes>
   );
 }
