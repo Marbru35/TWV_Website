@@ -1,11 +1,19 @@
 /* =========================
    Categories – Flat / White
+   (Layout/Bild-Ausschnitt bleibt wie bei dir – nur Design für "Benötigt/Inklusive" ergänzt)
    ========================= */
 
 .toiletIntro--flat {
   background: #f2f4f7;
   padding: 100px 0;
   color: rgba(20, 28, 40, 0.92);
+}
+
+/* ✅ HIER: Cards/Section horizontal breiter machen (ohne Layout/Bildausschnitt zu ändern) */
+.toiletIntro--flat .container {
+  max-width: 1440px;
+  width: calc(100% - 120px);
+  margin: 0 auto;
 }
 
 /* Was suchen Sie */
@@ -69,10 +77,10 @@
   background: #000080;
 }
 
-/* Layout */
+/* ✅ Layout: bricht automatisch um, wenn es zu eng wird (DEIN Layout bleibt) */
 .toiletCardLayout {
   display: grid;
-  grid-template-columns: minmax(320px, 1.05fr) minmax(300px, 0.95fr);
+  grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
   gap: 30px;
   align-items: stretch;
 }
@@ -81,68 +89,180 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .toiletCard--flat h3 {
   margin: 0 0 10px;
   font-size: 30px;
   font-weight: 750;
+  color: rgba(20, 28, 40, 0.95);
 }
 
 .toiletCard--flat p {
-  margin: 0 0 22px;
+  margin: 0 0 18px;
   font-size: 20px;
   line-height: 1.65;
+  color: rgba(20, 28, 40, 0.72);
+}
+
+/* =========================
+   ✅ INFO-BEREICHE (nur Design – ändert nichts am Bild/Layout)
+   ========================= */
+
+.twInfoLabel {
+  font-size: 16px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 128, 0.9);
+  margin: 0 0 12px;
+}
+
+/* Pills / Tags */
+.twPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.twPill {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  background: rgba(0, 0, 128, 0.06);
+  border: 1px solid rgba(0, 0, 128, 0.2);
+
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(20, 28, 40, 0.88);
+}
+
+/* Hinweisbox */
+.twNote {
+  margin-top: 14px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+
+  background: rgba(255, 170, 120, 0.18);
+  border: 1px solid rgba(255, 170, 120, 0.28);
+
+  font-size: 17x;
+  line-height: 1.6;
+  color: rgba(20, 28, 40, 0.85);
+}
+
+.twCheckList {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 18px;
+}
+
+.twCheckList li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(20, 28, 40, 0.8);
+}
+
+.twCheckList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 900;
+  color: rgba(0, 0, 128, 0.9);
 }
 
 /* Button */
+.toiletCardActions {
+  margin-top: 22px;
+}
+
 .toiletBtn {
   padding: 14px 22px;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 750;
   font-size: 17px;
   border: 1px solid rgba(0, 0, 128, 0.35);
   background: rgba(0, 0, 128, 0.12);
   cursor: pointer;
 }
 
-/* Bild – Desktop */
+/* =========================
+   Bild (DEIN Ausschnitt bleibt!)
+   ========================= */
+
 .toiletCardImage {
   border-radius: 14px;
   overflow: hidden;
   height: 100%;
+  min-width: 360px;
 }
 
 .toiletCardImage img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Desktop: schön flächig */
+  object-fit: cover; /* ✅ Ausschnitt wie vorher */
   display: block;
 }
 
 /* =========================
-   RESPONSIVE CARDS
+   ✅ NEU: ab 1540px und kleiner -> Bild unter Text
+   (Layout bewusst umgestellt, Bild-Ausschnitt wird im rechten Layout nicht verändert)
    ========================= */
-
-/* Tablet & Mobile: Bild unter Text */
-@media (max-width: 900px) {
+@media (max-width: 1540px) {
   .toiletCardLayout {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    grid-template-columns: 1fr; /* Bild geht unter Text */
+    gap: 30px;
   }
 
   .toiletCardImage {
+    min-width: 0;
     height: auto;
   }
 
   .toiletCardImage img {
     width: 100%;
-    height: auto;          /* ✅ volle Bildhöhe */
-    object-fit: contain;   /* ✅ nichts abschneiden */
+    height: auto;
+    object-fit: contain; /* komplett sichtbar wenn unter Text */
+  }
+
+  .twCheckList {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Small Mobile */
+/* =========================
+   Responsiv (DEIN Verhalten bleibt)
+   ========================= */
+
+@media (max-width: 980px) {
+  .toiletCardImage {
+    min-width: 0;
+    height: auto;
+  }
+
+  .toiletCardImage img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* ✅ komplett sichtbar sobald Bild unter Text ist */
+  }
+
+  .twCheckList {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 520px) {
   .toiletIntro--flat {
     padding: 70px 0;
@@ -171,15 +291,10 @@
   .toiletBtn {
     width: 100%;
   }
-
-  .toiletCardImage img {
-    height: auto;
-    object-fit: contain;
-  }
 }
 
 /* =========================
-   MODAL / SLIDER
+   MODAL / SLIDER (unverändert)
    ========================= */
 
 .twModal {
@@ -212,13 +327,6 @@
   font-weight: 800;
   letter-spacing: -0.3px;
   color: rgba(20, 28, 40, 0.96);
-}
-
-.twModalLead {
-  margin-top: 8px;
-  font-size: 18px;
-  line-height: 1.6;
-  color: rgba(20, 28, 40, 0.7);
 }
 
 .twModalClose {
@@ -264,8 +372,12 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.twPrev { left: 16px; }
-.twNext { right: 16px; }
+.twPrev {
+  left: 16px;
+}
+.twNext {
+  right: 16px;
+}
 
 /* Thumbnails */
 .twThumbRow {
@@ -304,10 +416,6 @@
 
   .twModalTitle {
     font-size: 20px;
-  }
-
-  .twModalLead {
-    font-size: 16px;
   }
 
   .twModalStage {

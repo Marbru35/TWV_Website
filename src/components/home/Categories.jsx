@@ -35,7 +35,6 @@ export default function Categories() {
   useEffect(() => {
     if (!isOpen) return;
 
-    // Scroll lock
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -75,14 +74,45 @@ export default function Categories() {
               <div className="toiletCardLayout">
                 <div className="toiletCardContent">
                   <h3>{m.title}</h3>
-                  <p>{m.lead}</p>
+
+
+                  {/* ✅ Benötigt */}
+                  {Array.isArray(m.requires) && m.requires.length > 0 && (
+                    <div className="twInfoBlock">
+                      <div className="twInfoLabel">Benötigt</div>
+                      <div className="twPills">
+                        {m.requires.map((r) => (
+                          <span className="twPill" key={r}>
+                            {r}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ✅ Hinweis */}
+                  {Array.isArray(m.notes) && m.notes.length > 0 && (
+                    <div className="twNote">
+                      {m.notes.map((n, idx) => (
+                        <div key={idx}>{n}</div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* ✅ Inklusive */}
+                  {Array.isArray(m.includes) && m.includes.length > 0 && (
+                    <div className="twInfoBlock">
+                      <div className="twInfoLabel">Inklusive</div>
+                      <ul className="twCheckList">
+                        {m.includes.map((it) => (
+                          <li key={it}>{it}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   <div className="toiletCardActions">
-                    <button
-                      className="toiletBtn"
-                      type="button"
-                      onClick={() => openModel(m.slug)}
-                    >
+                    <button className="toiletBtn" type="button" onClick={() => openModel(m.slug)}>
                       Details ansehen
                     </button>
                   </div>
@@ -101,12 +131,7 @@ export default function Categories() {
       {isOpen && activeModel && (
         <div className="twModal" onClick={close} role="dialog" aria-modal="true">
           <div className="twModalInner" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="twModalClose"
-              type="button"
-              onClick={close}
-              aria-label="Schließen"
-            >
+            <button className="twModalClose" type="button" onClick={close} aria-label="Schließen">
               ✕
             </button>
 
@@ -117,12 +142,7 @@ export default function Categories() {
 
             <div className="twModalStage">
               {activeModel.gallery.length > 1 && (
-                <button
-                  className="twNav twPrev"
-                  type="button"
-                  onClick={prev}
-                  aria-label="Vorheriges Bild"
-                >
+                <button className="twNav twPrev" type="button" onClick={prev} aria-label="Vorheriges Bild">
                   ‹
                 </button>
               )}
@@ -134,12 +154,7 @@ export default function Categories() {
               />
 
               {activeModel.gallery.length > 1 && (
-                <button
-                  className="twNav twNext"
-                  type="button"
-                  onClick={next}
-                  aria-label="Nächstes Bild"
-                >
+                <button className="twNav twNext" type="button" onClick={next} aria-label="Nächstes Bild">
                   ›
                 </button>
               )}
