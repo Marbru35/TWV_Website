@@ -1,12 +1,9 @@
-/* Kontakt: Abstand Hinweis -> Formular */
-.contactHint {
-  margin-bottom: 14px;
-}
-
 /* =========================
-   Kontakt – Navy Background
+   Kontakt – Layout + Design
    ========================= */
 
+/* ✅ Navy-Hintergrund erzwingen (auch wenn .section background setzt) */
+.section.contactSection,
 .contactSection {
   background: #0b1b3a;
   color: rgba(255, 255, 255, 0.96);
@@ -20,13 +17,97 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
+/* Breite anpassen */
+.contactSection .container {
+  width: min(1440px, calc(100% - 120px));
+  margin-inline: auto;
+}
+
+
+/* Abstand Hinweis -> Formular */
+.contactHint {
+  margin-bottom: 14px;
+}
+
 /* Cards bleiben hell */
 .contactSection .card {
   background: rgba(255, 255, 255, 0.96);
   border-color: rgba(20, 28, 40, 0.10);
 }
 
-/* muted/tiny in Card wieder dunkel */
+/* Card-Typo wieder dunkel */
 .contactSection .card .muted {
   color: rgba(20, 28, 40, 0.66);
+}
+
+/* ✅ Größere Schrift */
+.contactSection {
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.contactSection h2 {
+  font-size: clamp(28px, 2.3vw, 38px);
+  line-height: 1.15;
+}
+
+.contactSection .card__title {
+  color: rgba(20, 28, 40, 0.78);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.contactSection .card__body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.contactSection .field__label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contactSection .input,
+.contactSection select,
+.contactSection textarea {
+  font-size: 16px;
+  padding: 12px 14px;
+}
+
+.contactSection .btn {
+  font-size: 16px;
+  padding: 12px 18px;
+}
+
+/* Form nicht künstlich schmal */
+.contactSection .form {
+  width: 100%;
+  max-width: none;
+}
+
+/* Form-Abschnittstitel */
+.form__sectionTitle {
+  margin: 18px 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: rgba(20, 28, 40, 0.78);
+}
+
+/* PLZ/Ort Block etwas enger */
+.grid--tight {
+  gap: 12px;
+}
+
+/* ✅ 3-Spalten Grid für Name/Email/Handy */
+.grid--3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 820px) {
+  .grid--3 {
+    grid-template-columns: 1fr;
+  }
 }

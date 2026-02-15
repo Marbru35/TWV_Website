@@ -3,13 +3,22 @@ import { validateContact } from "./formSchema";
 
 const initial = {
   name: "",
+
+  // Rechnungsadresse
+  billStreet: "",
+  billZip: "",
+  billCity: "",
+
+  // Lieferadresse (wo der Wagen hin soll)
+  delStreet: "",
+  delZip: "",
+  delCity: "",
+
+  people: "",
   email: "",
   phone: "",
-  eventType: "",
-  dateFrom: "",
-  dateTo: "",
-  location: "",
-  people: "",
+  model: "",
+  occasion: "",
   message: "",
   consent: false,
 };
@@ -33,10 +42,18 @@ export default function ContactForm() {
       name: true,
       email: true,
       phone: true,
-      eventType: true,
-      dateFrom: true,
-      dateTo: true,
-      location: true,
+
+      billStreet: true,
+      billZip: true,
+      billCity: true,
+
+      delStreet: true,
+      delZip: true,
+      delCity: true,
+
+      people: true,
+      model: true,
+      occasion: true,
       message: true,
       consent: true,
     });
@@ -48,7 +65,7 @@ export default function ContactForm() {
     setServerMsg("");
 
     try {
-      // TODO: hier dein Backend/Service einhängen
+      // TODO: Backend/Service einhängen
       // await fetch("/api/contact", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(values) });
 
       await new Promise((r) => setTimeout(r, 600)); // Demo
@@ -63,13 +80,15 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={submit} className="form">
-      <div className="grid grid--2">
+      {/* ✅ Ganz oben: Name | Email | Handy */}
+      <div className="grid grid--3">
         <Field
           label="Name"
           value={values.name}
           onChange={(v) => setField("name", v)}
           onBlur={() => onBlur("name")}
           error={showError("name")}
+          placeholder="Vorname Nachname"
         />
         <Field
           label="E-Mail"
@@ -79,72 +98,122 @@ export default function ContactForm() {
           onBlur={() => onBlur("email")}
           error={showError("email")}
         />
-      </div>
-
-      <div className="grid grid--2">
         <Field
-          label="Telefon"
+          label="Handynummer"
           value={values.phone}
           onChange={(v) => setField("phone", v)}
           onBlur={() => onBlur("phone")}
           error={showError("phone")}
+          placeholder="z.B. 0176 …"
+        />
+      </div>
+
+      {/* Rechnungsadresse */}
+      <div className="form__sectionTitle">Rechnungsadresse</div>
+
+      <div className="grid grid--2">
+        <Field
+          label="Straße / Hausnummer"
+          value={values.billStreet}
+          onChange={(v) => setField("billStreet", v)}
+          onBlur={() => onBlur("billStreet")}
+          error={showError("billStreet")}
+          placeholder="Musterstraße 1"
         />
 
-        <div className="field">
-          <label className="field__label">Anlass</label>
-          <select
-            className={`input ${showError("eventType") ? "input--error" : ""}`}
-            value={values.eventType}
-            onChange={(e) => setField("eventType", e.target.value)}
-            onBlur={() => onBlur("eventType")}
-          >
-            <option value="">Bitte wählen…</option>
-            <option value="privat">Privat (Gartenparty, Hochzeit)</option>
-            <option value="verein">Vereins-/Straßenfest</option>
-            <option value="firma">Firmenfeier / Event</option>
-            <option value="baustelle">Baustelle</option>
-            <option value="sonstiges">Sonstiges</option>
-          </select>
-          {showError("eventType") && (
-            <div className="field__error">{errors.eventType}</div>
-          )}
+        <div className="grid grid--2 grid--tight">
+          <Field
+            label="PLZ"
+            value={values.billZip}
+            onChange={(v) => setField("billZip", v)}
+            onBlur={() => onBlur("billZip")}
+            error={showError("billZip")}
+            placeholder="12345"
+          />
+          <Field
+            label="Ort"
+            value={values.billCity}
+            onChange={(v) => setField("billCity", v)}
+            onBlur={() => onBlur("billCity")}
+            error={showError("billCity")}
+            placeholder="Musterstadt"
+          />
         </div>
       </div>
 
-      <div className="grid grid--2">
-        <Field
-          label="Datum von"
-          type="date"
-          value={values.dateFrom}
-          onChange={(v) => setField("dateFrom", v)}
-          onBlur={() => onBlur("dateFrom")}
-          error={showError("dateFrom")}
-        />
-        <Field
-          label="Datum bis"
-          type="date"
-          value={values.dateTo}
-          onChange={(v) => setField("dateTo", v)}
-          onBlur={() => onBlur("dateTo")}
-          error={showError("dateTo")}
-        />
-      </div>
+      {/* Lieferadresse */}
+      <div className="form__sectionTitle">Lieferadresse (wo der Wagen hin soll)</div>
 
       <div className="grid grid--2">
         <Field
-          label="Ort / PLZ"
-          value={values.location}
-          onChange={(v) => setField("location", v)}
-          onBlur={() => onBlur("location")}
-          error={showError("location")}
+          label="Straße / Hausnummer"
+          value={values.delStreet}
+          onChange={(v) => setField("delStreet", v)}
+          onBlur={() => onBlur("delStreet")}
+          error={showError("delStreet")}
+          placeholder="Musterstraße 1"
         />
+
+        <div className="grid grid--2 grid--tight">
+          <Field
+            label="PLZ"
+            value={values.delZip}
+            onChange={(v) => setField("delZip", v)}
+            onBlur={() => onBlur("delZip")}
+            error={showError("delZip")}
+            placeholder="12345"
+          />
+          <Field
+            label="Ort"
+            value={values.delCity}
+            onChange={(v) => setField("delCity", v)}
+            onBlur={() => onBlur("delCity")}
+            error={showError("delCity")}
+            placeholder="Musterstadt"
+          />
+        </div>
+      </div>
+
+      {/* Eckdaten */}
+      <div className="grid grid--2">
         <Field
-          label="Personen (optional)"
+          label="Ungefähre Personenzahl"
           value={values.people}
           onChange={(v) => setField("people", v)}
           onBlur={() => onBlur("people")}
-          placeholder="z.B. 80"
+          error={showError("people")}
+          placeholder="z.B. 50"
         />
+
+        <div className="field">
+          <label className="field__label">Modell</label>
+          <select
+            className={`input ${showError("model") ? "input--error" : ""}`}
+            value={values.model}
+            onChange={(e) => setField("model", e.target.value)}
+            onBlur={() => onBlur("model")}
+          >
+            <option value="">Bitte wählen…</option>
+            <option value="3-1-3">Modell 3-1-3</option>
+            <option value="1-1-1">Modell 1-1-1</option>
+            <option value="autark-1-1-1">Autarkes Modell 1-1-1</option>
+          </select>
+          {showError("model") && <div className="field__error">{errors.model}</div>}
+        </div>
+      </div>
+
+      <div className="field">
+        <label className="field__label">Anlass</label>
+        <input
+          className={`input ${showError("occasion") ? "input--error" : ""}`}
+          value={values.occasion}
+          onChange={(e) => setField("occasion", e.target.value)}
+          onBlur={() => onBlur("occasion")}
+          placeholder="z.B. Hochzeit, Firmenevent …"
+        />
+        {showError("occasion") && (
+          <div className="field__error">{errors.occasion}</div>
+        )}
       </div>
 
       <div className="field">
@@ -157,7 +226,7 @@ export default function ContactForm() {
           onChange={(e) => setField("message", e.target.value)}
           onBlur={() => onBlur("message")}
           rows={5}
-          placeholder="Kurz: Anlass, Besonderheiten, Zufahrt, gewünschte Dauer…"
+          placeholder="Kurz: Dauer, Zufahrt, Besonderheiten, etc."
         />
         {showError("message") && (
           <div className="field__error">{errors.message}</div>

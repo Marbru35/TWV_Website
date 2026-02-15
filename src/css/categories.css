@@ -9,7 +9,7 @@
   color: rgba(20, 28, 40, 0.92);
 }
 
-/* ✅ HIER: Cards/Section horizontal breiter machen (ohne Layout/Bildausschnitt zu ändern) */
+/* Cards/Section horizontal breiter machen (ohne Layout/Bildausschnitt zu ändern) */
 .toiletIntro--flat .container {
   max-width: 1440px;
   width: calc(100% - 120px);

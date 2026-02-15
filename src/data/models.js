@@ -74,7 +74,7 @@ export const models = [
 
 
     requires: ["220 Volt Steckdose"],
-    notes: ["Keinerlei Anschlüsse werden in der Nähe des Stellplatzes benötigt."],
+    notes: ["Lediglich ein Stromanschluss wird benötigt."],
     includes: [
       "LED Beleuchtung innen und außen",
       "Transport",
