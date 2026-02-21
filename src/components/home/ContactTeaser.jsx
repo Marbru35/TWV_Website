@@ -13,7 +13,7 @@ export default function ContactTeaser() {
         <div className="card card--padded contactHint">
           <div className="card__title">Hinweis</div>
           <div className="card__body">
-            Vor Ort wird ein Stromanschluss benötigt. Preise sind abhängig von
+            Preise sind abhängig von
             Aufwand/Entfernung/Mietdauer.
           </div>
         </div>

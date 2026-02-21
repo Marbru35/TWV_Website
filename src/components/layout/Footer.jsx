@@ -152,7 +152,7 @@ export default function Footer() {
                     <strong>Verantwortlich für den Inhalt</strong>
                     Robin Viola
                     <br />
-                    Anschrift wie oben
+                    Anschrift wie links
                   </div>
                 </div>
 
