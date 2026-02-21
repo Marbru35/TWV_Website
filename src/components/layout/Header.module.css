@@ -56,3 +56,43 @@
   box-shadow: 0 10px 24px rgba(30, 110, 255, 0.18);
   transform: translateY(-1px);
 }
+
+/* ✅ Tablet */
+@media (max-width: 768px) {
+  .inner {
+    width: calc(100% - 32px);
+    padding: 12px 0;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .cta :global(.btn) {
+    padding: 11px 16px;
+    font-size: 14px;
+    min-height: 40px;
+  }
+}
+
+/* ✅ iPhone / sehr klein */
+@media (max-width: 420px) {
+  .inner {
+    width: calc(100% - 26px);
+    padding: 10px 0;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .cta {
+    gap: 8px;
+  }
+
+  .cta :global(.btn) {
+    padding: 9px 12px;
+    font-size: 13px;
+    min-height: 36px;
+  }
+}

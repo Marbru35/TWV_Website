@@ -29,7 +29,9 @@ export default function Categories() {
 
   function prev() {
     if (!activeModel) return;
-    setActiveIndex((i) => (i - 1 + activeModel.gallery.length) % activeModel.gallery.length);
+    setActiveIndex(
+      (i) => (i - 1 + activeModel.gallery.length) % activeModel.gallery.length
+    );
   }
 
   useEffect(() => {
@@ -53,6 +55,18 @@ export default function Categories() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, activeSlug]);
 
+  // ✅ "… – Modell X" oder "… - Modell X" -> { pre: "…", model: "Modell X" }
+  function splitTitleForModelLine(title) {
+    const t = String(title || "").trim();
+    const match = t.match(/^(.*?)(?:\s*[–-]\s*)(Modell\s+.+)$/i);
+    if (!match) return { pre: t, model: "" };
+
+    return {
+      pre: (match[1] || "").trim(),
+      model: (match[2] || "").trim(),
+    };
+  }
+
   return (
     <section className="toiletIntro--flat">
       <div className="container">
@@ -60,70 +74,87 @@ export default function Categories() {
         <div className="searchBlock--left">
           <h2 className="searchTitle">Was suchen Sie?</h2>
           <p className="searchText">
-            Ob autarker Toilettenwagen mit Frisch- und Abwassertank oder ein Modell
-            mit Frisch- und Abwasseranschluss – bei uns finden Sie die passende
-            Lösung für Ihren Einsatzort.
+            Ob autarker Toilettenwagen mit Frisch- und Abwassertank oder ein
+            Modell mit Frisch- und Abwasseranschluss – bei uns finden Sie die
+            passende Lösung für Ihren Einsatzort.
           </p>
         </div>
 
         <h2 className="toiletIntroTitle">Unsere Toilettenwagen</h2>
 
         <div className="toiletCategories--flat">
-          {models.map((m) => (
-            <article className="toiletCard--flat" key={m.slug}>
-              <div className="toiletCardLayout">
-                <div className="toiletCardContent">
-                  <h3>{m.title}</h3>
+          {models.map((m) => {
+            const { pre, model } = splitTitleForModelLine(m.title);
 
+            return (
+              <article className="toiletCard--flat" key={m.slug}>
+                <div className="toiletCardLayout">
+                  <div className="toiletCardContent">
+                    <h3>
+                      {/* ✅ Bindestrich an der ERSTEN Zeile */}
+                      {pre}
+                      {model ? " -" : ""}
+                      {model ? (
+                        <>
+                          {" "}
+                          <span className="twModelBreak">{model}</span>
+                        </>
+                      ) : null}
+                    </h3>
 
-                  {/* ✅ Benötigt */}
-                  {Array.isArray(m.requires) && m.requires.length > 0 && (
-                    <div className="twInfoBlock">
-                      <div className="twInfoLabel">Benötigt</div>
-                      <div className="twPills">
-                        {m.requires.map((r) => (
-                          <span className="twPill" key={r}>
-                            {r}
-                          </span>
+                    {/* ✅ Benötigt */}
+                    {Array.isArray(m.requires) && m.requires.length > 0 && (
+                      <div className="twInfoBlock">
+                        <div className="twInfoLabel">Benötigt</div>
+                        <div className="twPills">
+                          {m.requires.map((r) => (
+                            <span className="twPill" key={r}>
+                              {r}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ✅ Hinweis */}
+                    {Array.isArray(m.notes) && m.notes.length > 0 && (
+                      <div className="twNote">
+                        {m.notes.map((n, idx) => (
+                          <div key={idx}>{n}</div>
                         ))}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* ✅ Hinweis */}
-                  {Array.isArray(m.notes) && m.notes.length > 0 && (
-                    <div className="twNote">
-                      {m.notes.map((n, idx) => (
-                        <div key={idx}>{n}</div>
-                      ))}
-                    </div>
-                  )}
+                    {/* ✅ Inklusive */}
+                    {Array.isArray(m.includes) && m.includes.length > 0 && (
+                      <div className="twInfoBlock">
+                        <div className="twInfoLabel">Inklusive</div>
+                        <ul className="twCheckList">
+                          {m.includes.map((it) => (
+                            <li key={it}>{it}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
 
-                  {/* ✅ Inklusive */}
-                  {Array.isArray(m.includes) && m.includes.length > 0 && (
-                    <div className="twInfoBlock">
-                      <div className="twInfoLabel">Inklusive</div>
-                      <ul className="twCheckList">
-                        {m.includes.map((it) => (
-                          <li key={it}>{it}</li>
-                        ))}
-                      </ul>
+                    <div className="toiletCardActions">
+                      <button
+                        className="toiletBtn"
+                        type="button"
+                        onClick={() => openModel(m.slug)}
+                      >
+                        Details ansehen
+                      </button>
                     </div>
-                  )}
+                  </div>
 
-                  <div className="toiletCardActions">
-                    <button className="toiletBtn" type="button" onClick={() => openModel(m.slug)}>
-                      Details ansehen
-                    </button>
+                  <div className="toiletCardImage" aria-hidden="true">
+                    <img src={m.gallery[0].src} alt={m.gallery[0].alt} />
                   </div>
                 </div>
-
-                <div className="toiletCardImage" aria-hidden="true">
-                  <img src={m.gallery[0].src} alt={m.gallery[0].alt} />
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
 
@@ -131,7 +162,12 @@ export default function Categories() {
       {isOpen && activeModel && (
         <div className="twModal" onClick={close} role="dialog" aria-modal="true">
           <div className="twModalInner" onClick={(e) => e.stopPropagation()}>
-            <button className="twModalClose" type="button" onClick={close} aria-label="Schließen">
+            <button
+              className="twModalClose"
+              type="button"
+              onClick={close}
+              aria-label="Schließen"
+            >
               ✕
             </button>
 
@@ -142,7 +178,12 @@ export default function Categories() {
 
             <div className="twModalStage">
               {activeModel.gallery.length > 1 && (
-                <button className="twNav twPrev" type="button" onClick={prev} aria-label="Vorheriges Bild">
+                <button
+                  className="twNav twPrev"
+                  type="button"
+                  onClick={prev}
+                  aria-label="Vorheriges Bild"
+                >
                   ‹
                 </button>
               )}
@@ -154,7 +195,12 @@ export default function Categories() {
               />
 
               {activeModel.gallery.length > 1 && (
-                <button className="twNav twNext" type="button" onClick={next} aria-label="Nächstes Bild">
+                <button
+                  className="twNav twNext"
+                  type="button"
+                  onClick={next}
+                  aria-label="Nächstes Bild"
+                >
                   ›
                 </button>
               )}

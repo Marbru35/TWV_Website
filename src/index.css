@@ -33,22 +33,42 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color: var(--text);
   background: var(--bg);
+
+  /* ✅ Grundtypografie */
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* ✅ iPhone / kleine Geräte: Schrift sichtbar kleiner */
+@media (max-width: 420px) {
+  body { font-size: 14px; }
 }
 
 a { color: inherit; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/* ✅ Sections: auf Mobile weniger Luft */
 .section { padding: 76px 0; }
+@media (max-width: 640px) { .section { padding: 58px 0; } }
+@media (max-width: 420px) { .section { padding: 46px 0; } }
 
 /* Breiterer Content */
 .container { width: min(1320px, calc(100% - 64px)); margin: 0 auto; }
-@media (max-width: 520px) {
-  .container { width: calc(100% - 34px); }
+@media (max-width: 640px) {
+  .container { width: calc(100% - 32px); }
+}
+@media (max-width: 420px) {
+  .container { width: calc(100% - 26px); }
 }
 
 .grid { display: grid; gap: 16px; }
 .grid--2 { grid-template-columns: 1fr; }
 @media (min-width: 900px) { .grid--2 { grid-template-columns: 1fr 1fr; } }
+
+/* ✅ Grid-Gaps auf iPhone kleiner */
+@media (max-width: 420px) {
+  .grid { gap: 12px; }
+}
 
 .muted { color: var(--muted); }
 .tiny { font-size: 12px; }
@@ -68,6 +88,11 @@ a:hover { text-decoration: underline; }
   transform: translateY(-2px);
   box-shadow: var(--shadow2);
   background: var(--surface2);
+}
+
+/* ✅ Card-Padding auf iPhone kleiner */
+@media (max-width: 420px) {
+  .card--padded { padding: 14px; }
 }
 
 .btn {
@@ -95,9 +120,25 @@ a:hover { text-decoration: underline; }
   border-color: rgba(30, 110, 255, 0.40);
 }
 
+/* ✅ Buttons auf iPhone kleiner */
+@media (max-width: 420px) {
+  .btn { padding: 9px 12px; font-size: 14px; }
+}
+
+/* ✅ Headings: auf Mobile deutlich kleiner */
 h1 { font-size: clamp(34px, 4vw, 58px); margin: 0 0 10px; line-height: 1.05; }
 h2 { font-size: 36px; margin: 0 0 10px; }
 p { line-height: 1.6; margin: 0 0 12px; }
+
+@media (max-width: 640px) {
+  h2 { font-size: 30px; }
+}
+
+@media (max-width: 420px) {
+  h1 { font-size: clamp(24px, 9vw, 34px); }
+  h2 { font-size: clamp(20px, 7vw, 28px); }
+  p { margin-bottom: 10px; }
+}
 
 .form { display: grid; gap: 12px; }
 .field { display: grid; gap: 6px; }
@@ -128,6 +169,15 @@ p { line-height: 1.6; margin: 0 0 12px; }
 .form__hint { font-size: 13px; }
 .ok { color: rgba(0, 120, 70, 0.95); }
 .bad { color: rgba(190, 30, 30, 0.95); }
+
+/* ✅ Forms auf iPhone kompakter */
+@media (max-width: 420px) {
+  .form { gap: 10px; }
+  .input { padding: 10px 11px; border-radius: 12px; font-size: 14px; }
+  .field__label { font-size: 12px; }
+  .form__actions { gap: 8px; }
+  .form__hint { font-size: 12px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

@@ -205,3 +205,76 @@
   color: var(--muted);
   line-height: 1.55;
 }
+
+/* ✅ iPhone: kompakter */
+@media (max-width: 420px) {
+  .process2__grid { gap: 12px; }
+  .process2__steps { gap: 8px; }
+
+  .process2__step {
+    padding: 12px 12px;
+    grid-template-columns: 54px 1fr;
+    gap: 10px;
+    border-radius: 14px;
+  }
+
+  .process2__num {
+    width: 54px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  .process2__badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .process2__panel {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .process2__panelTop {
+    grid-template-columns: 48px 1fr;
+    gap: 10px;
+  }
+
+  .process2__panelNum {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+
+  .process2__panelTitle {
+    font-size: 15px;
+  }
+
+  .process2__panelDesc {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .process2__panelBody { gap: 10px; }
+  .process2__bullets { gap: 8px; }
+
+  .process2__check {
+    width: 18px;
+    height: 18px;
+    border-radius: 7px;
+  }
+
+  .process2__bullet {
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .process2__note {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .process2__noteTitle { font-size: 13px; }
+  .process2__noteText { font-size: 13px; line-height: 1.5; }
+}

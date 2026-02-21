@@ -1,6 +1,5 @@
 /* =========================
    Categories – Flat / White
-   (Layout/Bild-Ausschnitt bleibt wie bei dir – nur Design für "Benötigt/Inklusive" ergänzt)
    ========================= */
 
 .toiletIntro--flat {
@@ -9,7 +8,7 @@
   color: rgba(20, 28, 40, 0.92);
 }
 
-/* Cards/Section horizontal breiter machen (ohne Layout/Bildausschnitt zu ändern) */
+/* Cards/Section horizontal breiter machen */
 .toiletIntro--flat .container {
   max-width: 1440px;
   width: calc(100% - 120px);
@@ -77,7 +76,7 @@
   background: #000080;
 }
 
-/* ✅ Layout: bricht automatisch um, wenn es zu eng wird (DEIN Layout bleibt) */
+/* Layout */
 .toiletCardLayout {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
@@ -99,6 +98,12 @@
   color: rgba(20, 28, 40, 0.95);
 }
 
+/* ✅ Modell-Teil separat steuerbar (Desktop inline) */
+.twModelBreak {
+  display: inline;
+  white-space: nowrap;
+}
+
 .toiletCard--flat p {
   margin: 0 0 18px;
   font-size: 20px;
@@ -106,10 +111,7 @@
   color: rgba(20, 28, 40, 0.72);
 }
 
-/* =========================
-   ✅ INFO-BEREICHE (nur Design – ändert nichts am Bild/Layout)
-   ========================= */
-
+/* Info Label */
 .twInfoLabel {
   font-size: 16px;
   font-weight: 850;
@@ -119,7 +121,7 @@
   margin: 0 0 12px;
 }
 
-/* Pills / Tags */
+/* Pills */
 .twPills {
   display: flex;
   flex-wrap: wrap;
@@ -129,13 +131,10 @@
 .twPill {
   display: inline-flex;
   align-items: center;
-
   padding: 10px 14px;
   border-radius: 10px;
-
   background: rgba(0, 0, 128, 0.06);
   border: 1px solid rgba(0, 0, 128, 0.2);
-
   font-size: 15px;
   font-weight: 700;
   color: rgba(20, 28, 40, 0.88);
@@ -151,7 +150,7 @@
   background: rgba(255, 170, 120, 0.18);
   border: 1px solid rgba(255, 170, 120, 0.28);
 
-  font-size: 17x;
+  font-size: 17px;
   line-height: 1.6;
   color: rgba(20, 28, 40, 0.85);
 }
@@ -198,10 +197,7 @@
   cursor: pointer;
 }
 
-/* =========================
-   Bild (DEIN Ausschnitt bleibt!)
-   ========================= */
-
+/* Bild */
 .toiletCardImage {
   border-radius: 14px;
   overflow: hidden;
@@ -212,17 +208,14 @@
 .toiletCardImage img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ✅ Ausschnitt wie vorher */
+  object-fit: cover;
   display: block;
 }
 
-/* =========================
-   ✅ NEU: ab 1540px und kleiner -> Bild unter Text
-   (Layout bewusst umgestellt, Bild-Ausschnitt wird im rechten Layout nicht verändert)
-   ========================= */
+/* ab 1540px und kleiner -> Bild unter Text */
 @media (max-width: 1540px) {
   .toiletCardLayout {
-    grid-template-columns: 1fr; /* Bild geht unter Text */
+    grid-template-columns: 1fr;
     gap: 30px;
   }
 
@@ -234,7 +227,7 @@
   .toiletCardImage img {
     width: 100%;
     height: auto;
-    object-fit: contain; /* komplett sichtbar wenn unter Text */
+    object-fit: contain;
   }
 
   .twCheckList {
@@ -242,10 +235,7 @@
   }
 }
 
-/* =========================
-   Responsiv (DEIN Verhalten bleibt)
-   ========================= */
-
+/* 980 */
 @media (max-width: 980px) {
   .toiletCardImage {
     min-width: 0;
@@ -255,7 +245,7 @@
   .toiletCardImage img {
     width: 100%;
     height: auto;
-    object-fit: contain; /* ✅ komplett sichtbar sobald Bild unter Text ist */
+    object-fit: contain;
   }
 
   .twCheckList {
@@ -263,38 +253,130 @@
   }
 }
 
+/* ✅ Mobile: Abstände wie Contact + Modell in neuer Zeile */
 @media (max-width: 520px) {
+  .toiletIntro--flat .container {
+    width: calc(100% - 34px);
+  }
+
   .toiletIntro--flat {
-    padding: 70px 0;
+    padding: 46px 0;
   }
 
   .searchBlock--left {
-    margin-bottom: 42px;
+    margin: 0 0 22px;
+  }
+
+  .searchTitle {
+    font-size: clamp(24px, 8.0vw, 32px);
+    margin-bottom: 8px;
+  }
+
+  .searchText {
+    font-size: 14px;
+    line-height: 1.65;
   }
 
   .toiletIntroTitle {
-    font-size: 32px;
+    font-size: clamp(20px, 7.2vw, 28px);
+    margin: 0 0 12px;
+  }
+
+  .toiletCategories--flat {
+    gap: 16px;
   }
 
   .toiletCard--flat {
-    padding: 28px 20px 22px;
+    padding: 18px 14px 14px;
+    border-radius: 14px;
   }
 
   .toiletCard--flat h3 {
-    font-size: 24px;
+    font-size: 19px;
+    line-height: 1.18;
   }
 
-  .toiletCard--flat p {
-    font-size: 18px;
+  .twModelBreak {
+    display: block;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .twInfoLabel {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .twPills {
+    gap: 8px;
+  }
+
+  .twPill {
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .twNote {
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .twCheckList {
+    gap: 8px 10px;
+    margin-top: 10px;
+  }
+
+  .twCheckList li {
+    font-size: 13px;
+    padding-left: 18px;
+  }
+
+  .toiletCardActions {
+    margin-top: 12px;
   }
 
   .toiletBtn {
     width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+}
+
+/* ✅ iPhone SE */
+@media (max-width: 420px) {
+  .toiletIntro--flat .container {
+    width: calc(100% - 26px);
+  }
+
+  .toiletIntro--flat .container .searchBlock--left h2 {
+    padding-left: 5px;
+    padding-top: 10px;
+  }
+
+  .toiletIntro--flat .container .searchBlock--left p {
+    padding-left: 5px;
+  }
+
+  .toiletIntro--flat .container .toiletIntroTitle {
+    padding-left: 5px;
+    padding-top: 30px;
+  }
+
+  .toiletIntro--flat {
+    padding: 40px 0;
+  }
+
+  .toiletCategories--flat {
+    gap: 30px;
   }
 }
 
 /* =========================
-   MODAL / SLIDER (unverändert)
+   MODAL / SLIDER
    ========================= */
 
 .twModal {
@@ -372,12 +454,8 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.twPrev {
-  left: 16px;
-}
-.twNext {
-  right: 16px;
-}
+.twPrev { left: 16px; }
+.twNext { right: 16px; }
 
 /* Thumbnails */
 .twThumbRow {
@@ -408,27 +486,95 @@
   border-color: #000080;
 }
 
-/* Modal Mobile */
+/* ✅ Modal Mobile: gleicher Innenabstand wie Cards */
 @media (max-width: 520px) {
+  .twModal {
+    padding: 14px; /* weniger Außenluft */
+  }
+
+  .twModalInner {
+    width: min(520px, 100%);
+    border-radius: 18px;
+  }
+
+  /* Header wie Card-Padding (≈14px) */
   .twModalHeader {
-    padding: 22px 20px 16px;
+    padding: 16px 14px 12px;
   }
 
   .twModalTitle {
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
+  .twModalLead {
+    font-size: 13px;
+    line-height: 1.45;
+    color: rgba(20, 28, 40, 0.7);
+    margin-top: 6px;
+  }
+
+  /* Close Button sitzt besser im Raster */
+  .twModalClose {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Stage-Padding wie Cards */
   .twModalStage {
-    padding: 18px;
+    padding: 14px;
     min-height: 56vh;
   }
 
   .twModalImg {
-    max-height: calc(56vh - 36px);
+    max-height: calc(56vh - 28px);
+  }
+
+  /* Nav Buttons etwas kleiner */
+  .twNav {
+    width: 46px;
+    height: 46px;
+    font-size: 28px;
+  }
+  .twPrev { left: 10px; }
+  .twNext { right: 10px; }
+
+  /* Thumbnail Row auch wie Card-Padding */
+  .twThumbRow {
+    padding: 14px;
+    gap: 10px;
   }
 
   .twThumb {
-    width: 96px;
-    height: 64px;
+    width: 90px;
+    height: 60px;
+    border-radius: 12px;
+  }
+}
+
+/* ✅ iPhone SE noch etwas enger */
+@media (max-width: 420px) {
+  .twModal {
+    padding: 10px;
+  }
+
+  .twModalHeader {
+    padding: 14px 12px 10px;
+  }
+
+  .twModalStage {
+    padding: 12px;
+    min-height: 54vh;
+  }
+
+  .twThumbRow {
+    padding: 12px;
+  }
+
+  .twThumb {
+    width: 84px;
+    height: 56px;
   }
 }

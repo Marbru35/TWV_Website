@@ -2,7 +2,6 @@
    Kontakt – Layout + Design
    ========================= */
 
-/* ✅ Navy-Hintergrund erzwingen (auch wenn .section background setzt) */
 .section.contactSection,
 .contactSection {
   background: #0b1b3a;
@@ -23,7 +22,6 @@
   margin-inline: auto;
 }
 
-
 /* Abstand Hinweis -> Formular */
 .contactHint {
   margin-bottom: 14px;
@@ -40,7 +38,7 @@
   color: rgba(20, 28, 40, 0.66);
 }
 
-/* ✅ Größere Schrift */
+/* Desktop */
 .contactSection {
   font-size: 18px;
   line-height: 1.55;
@@ -99,7 +97,7 @@
   gap: 12px;
 }
 
-/* ✅ 3-Spalten Grid für Name/Email/Handy */
+/* 3-Spalten Grid für Name/Email/Handy */
 .grid--3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -109,5 +107,72 @@
 @media (max-width: 820px) {
   .grid--3 {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ✅ Mobile: alles kleiner */
+@media (max-width: 520px) {
+  .contactSection .container {
+    width: calc(100% - 34px);
+  }
+
+  .contactSection {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .contactSection h2 {
+    font-size: clamp(20px, 7vw, 28px);
+    padding-left: 5px;
+  }
+
+  .contactSection .muted {
+    padding-left: 5px;
+  }
+
+  .contactSection .card__title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .contactSection .card__body {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .contactSection .field__label {
+    font-size: 12px;
+  }
+
+  .contactSection .input,
+  .contactSection select,
+  .contactSection textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .contactSection .btn {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .form__sectionTitle {
+    margin: 14px 0 8px;
+    font-size: 12px;
+  }
+
+  .grid--tight {
+    gap: 10px;
+  }
+}
+
+/* ✅ iPhone SE noch enger */
+@media (max-width: 420px) {
+  .contactSection .container {
+    width: calc(100% - 26px);
+  }
+
+  .contactHint {
+    margin-bottom: 10px;
   }
 }

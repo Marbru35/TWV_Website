@@ -7,7 +7,6 @@ import "./css/hero.css";
 import "./css/process.css";
 import "./css/categories.css";
 import "./css/contact.css";
-import "./css/datenschutz.css";
 
 import App from "./App.jsx";
 

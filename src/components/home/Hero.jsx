@@ -62,8 +62,10 @@ export default function Hero() {
 
       <div className="heroCenter">
         <div className="heroPanel heroPanel--white">
+          <div className="heroKicker">Toilettenwagenvermietung</div>
+
           <h1 className="heroTitle">
-            <span className="heroTitleWord">Toilettenwagenvermietung</span>{" "}
+            <span className="heroTitleWord">TWV</span>{" "}
             <span className="heroTitleWord">Viola</span>
           </h1>
 

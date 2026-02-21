@@ -241,4 +241,79 @@
   .grid {
     gap: 28px;
   }
+
+  .title {
+    font-size: 24px;
+  }
+}
+
+/* ✅ iPhone: alles deutlich kleiner + weniger Luft */
+@media (max-width: 420px) {
+  .bar { padding: 28px 0 22px; }
+
+  .barInner,
+  .panelInner {
+    width: calc(100% - 26px);
+  }
+
+  .left { gap: 10px; flex-wrap: wrap; }
+
+  .brand { font-size: 15px; }
+  .meta { font-size: 13px; }
+
+  .right { gap: 14px; flex-wrap: wrap; }
+
+  .link,
+  .linkButton {
+    font-size: 13px;
+    padding: 2px 0;
+  }
+
+  .content { padding: 24px 0 34px; }
+
+  .head { margin-bottom: 16px; }
+  .title { font-size: 18px; }
+
+  .close { padding: 6px 10px; border-radius: 10px; }
+
+  .grid {
+    gap: 18px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .grid strong {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .disclaimer {
+    margin-top: 22px;
+    padding-top: 14px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .legal {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .lead { margin-bottom: 14px; }
+
+  .legal h4 {
+    margin: 18px 0 8px;
+    font-size: 14px;
+  }
+
+  .legal p { margin-bottom: 10px; }
+  .legal ul { margin: 8px 0 12px 16px; }
+  .legal li { margin: 5px 0; }
+
+  .note {
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
 }
