@@ -1,74 +1,117 @@
 const { app } = require("@azure/functions");
+const nodemailer = require("nodemailer");
+
+function requiredEnv(name) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Missing env var: ${name}`);
+  return v;
+}
 
 app.http("mail", {
-  methods: ["GET", "POST"],
+  methods: ["POST"],
   authLevel: "anonymous",
   handler: async (request, context) => {
-    // Hilfsfunktion: JSON Response
-    const json = (status, obj) => ({
-      status,
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify(obj),
-    });
-
     try {
-      context.log(`mail: ${request.method} ${request.url}`);
-
-      // ✅ GET: Query params zurückgeben
-      if (request.method === "GET") {
-        const params = {};
-        // request.query ist ein URLSearchParams
-        for (const [k, v] of request.query.entries()) params[k] = v;
-
-        return json(200, {
-          ok: true,
-          method: "GET",
-          query: params,
-        });
-      }
-
-      // ✅ POST: JSON Body lesen und "echo" zurückgeben
-      if (request.method === "POST") {
-        const contentType = request.headers.get("content-type") || "";
-
-        // Wenn dein Frontend korrekt sendet, ist es application/json
-        if (!contentType.toLowerCase().includes("application/json")) {
-          // Fallback: Text lesen, aber klar sagen was erwartet wird
-          const raw = await request.text();
-          return json(415, {
+      // 1) JSON Body lesen
+      const contentType = request.headers.get("content-type") || "";
+      if (!contentType.toLowerCase().includes("application/json")) {
+        return {
+          status: 415,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify({
             ok: false,
-            error: "Expected application/json",
+            error: "Expected Content-Type: application/json",
             receivedContentType: contentType,
-            rawPreview: raw?.slice?.(0, 500) ?? "",
-          });
-        }
-
-        const data = await request.json();
-
-        // optional: minimal check (nur fürs Debuggen)
-        if (!data || typeof data !== "object") {
-          return json(400, { ok: false, error: "Invalid JSON body" });
-        }
-
-        context.log("mail: received body", data);
-
-        // ✅ Das ist der Teil, den du dann im Frontend siehst:
-        return json(200, {
-          ok: true,
-          method: "POST",
-          received: data,
-          receivedAt: new Date().toISOString(),
-        });
+          }),
+        };
       }
 
-      // Sollte nie passieren, weil methods nur GET/POST sind
-      return json(405, { ok: false, error: "Method not allowed" });
+      const data = await request.json();
+
+      // 2) Minimal-Validierung (Client validiert zwar, aber Server MUSS trotzdem prüfen)
+      if (!data?.consent) {
+        return {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify({ ok: false, error: "Consent is required." }),
+        };
+      }
+
+      if (!data?.name || !data?.email || !data?.phone) {
+        return {
+          status: 400,
+          headers: { "Content-Type": "application/json; charset=utf-8" },
+          body: JSON.stringify({ ok: false, error: "Missing required fields." }),
+        };
+      }
+
+      // 3) SMTP Config aus Env
+      const host = requiredEnv("SMTP_HOST");
+      const port = Number(requiredEnv("SMTP_PORT"));
+      const secure = String(process.env.SMTP_SECURE || "").toLowerCase() === "true";
+      const user = requiredEnv("SMTP_USER");
+      const pass = requiredEnv("SMTP_PASS");
+      const mailTo = requiredEnv("MAIL_TO");
+      const mailFrom = requiredEnv("MAIL_FROM");
+
+      // 4) Nodemailer Transporter
+      const transporter = nodemailer.createTransport({
+        host,
+        port,
+        secure,
+        auth: { user, pass },
+      });
+
+      // 5) Mail-Inhalt bauen
+      const subject = `Neue Anfrage – ${data.name} (${data.model || "kein Modell"})`;
+
+      const text = [
+        "Neue Anfrage über das Kontaktformular",
+        "",
+        `Name: ${data.name}`,
+        `E-Mail: ${data.email}`,
+        `Telefon: ${data.phone}`,
+        "",
+        "Rechnungsadresse:",
+        `  Straße: ${data.billStreet || "-"}`,
+        `  PLZ/Ort: ${data.billZip || "-"} ${data.billCity || "-"}`,
+        "",
+        "Lieferadresse:",
+        `  Straße: ${data.delStreet || "-"}`,
+        `  PLZ/Ort: ${data.delZip || "-"} ${data.delCity || "-"}`,
+        "",
+        "Eckdaten:",
+        `  Personenzahl: ${data.people || "-"}`,
+        `  Modell: ${data.model || "-"}`,
+        `  Anlass: ${data.occasion || "-"}`,
+        "",
+        "Nachricht:",
+        `${data.message || "-"}`,
+      ].join("\n");
+
+      // 6) Senden
+      const info = await transporter.sendMail({
+        from: mailFrom,
+        to: mailTo,
+        replyTo: data.email, // Antworten gehen direkt an den Absender
+        subject,
+        text,
+      });
+
+      context.log("Mail sent:", info?.messageId || info);
+
+      // 7) Response ans Frontend
+      return {
+        status: 200,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({ ok: true }),
+      };
     } catch (err) {
-      context.log("mail: error", err);
+      context.log("MAIL ERROR:", err);
       return {
         status: 500,
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({ ok: false, error: "Server error" }),
+        body: JSON.stringify({ ok: false, error: "Mail could not be sent." }),
       };
     }
   },
