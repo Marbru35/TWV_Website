@@ -389,8 +389,10 @@
   padding: 24px;
 }
 
+/* ✅ FIX: symmetrischer Abstand links/rechts auf “mittel-kleinen” Screens */
 .twModalInner {
-  width: min(1200px, 96vw);
+  width: 100%;
+  max-width: 1200px;
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
@@ -409,8 +411,24 @@
   font-weight: 800;
   letter-spacing: -0.3px;
   color: rgba(20, 28, 40, 0.96);
+
+  /* ✅ Platz für das X (verhindert Überdeckung) */
+  padding-right: 64px;
 }
 
+/* ✅ Desktop/Tablet: Modell bleibt inline im Modal */
+.twModalTitle .twModelBreak {
+  display: inline;
+  white-space: nowrap;
+  margin-top: 0;
+}
+
+/* Desktop Trenner " – " bleibt sichtbar */
+.twModalDash {
+  display: inline;
+}
+
+/* Close */
 .twModalClose {
   position: absolute;
   top: 18px;
@@ -454,8 +472,12 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.twPrev { left: 16px; }
-.twNext { right: 16px; }
+.twPrev {
+  left: 16px;
+}
+.twNext {
+  right: 16px;
+}
 
 /* Thumbnails */
 .twThumbRow {
@@ -486,18 +508,17 @@
   border-color: #000080;
 }
 
-/* ✅ Modal Mobile: gleicher Innenabstand wie Cards */
+/* ✅ Modal Mobile: gleicher Innenabstand wie Cards + Titel umbrechen wie gewünscht */
 @media (max-width: 520px) {
   .twModal {
-    padding: 14px; /* weniger Außenluft */
+    padding: 14px;
   }
 
   .twModalInner {
-    width: min(520px, 100%);
+    width: 100%;
     border-radius: 18px;
   }
 
-  /* Header wie Card-Padding (≈14px) */
   .twModalHeader {
     padding: 16px 14px 12px;
   }
@@ -505,6 +526,22 @@
   .twModalTitle {
     font-size: 18px;
     line-height: 1.2;
+    padding-right: 56px; /* X Platz */
+  }
+
+  /* ✅ Mobile: wir wollen "… -" am Zeilenende + Modell in neuer Zeile */
+  .twModalDash {
+    display: none;
+  }
+
+  .twModalTitlePre::after {
+    content: " -";
+  }
+
+  .twModalTitle .twModelBreak {
+    display: block;
+    white-space: nowrap;
+    margin-top: 2px;
   }
 
   .twModalLead {
@@ -514,7 +551,6 @@
     margin-top: 6px;
   }
 
-  /* Close Button sitzt besser im Raster */
   .twModalClose {
     top: 10px;
     right: 10px;
@@ -522,7 +558,6 @@
     height: 40px;
   }
 
-  /* Stage-Padding wie Cards */
   .twModalStage {
     padding: 14px;
     min-height: 56vh;
@@ -532,16 +567,19 @@
     max-height: calc(56vh - 28px);
   }
 
-  /* Nav Buttons etwas kleiner */
   .twNav {
     width: 46px;
     height: 46px;
     font-size: 28px;
   }
-  .twPrev { left: 10px; }
-  .twNext { right: 10px; }
 
-  /* Thumbnail Row auch wie Card-Padding */
+  .twPrev {
+    left: 10px;
+  }
+  .twNext {
+    right: 10px;
+  }
+
   .twThumbRow {
     padding: 14px;
     gap: 10px;

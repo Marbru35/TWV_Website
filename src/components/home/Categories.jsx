@@ -91,7 +91,6 @@ export default function Categories() {
                 <div className="toiletCardLayout">
                   <div className="toiletCardContent">
                     <h3>
-                      {/* ✅ Bindestrich an der ERSTEN Zeile */}
                       {pre}
                       {model ? " -" : ""}
                       {model ? (
@@ -159,71 +158,88 @@ export default function Categories() {
       </div>
 
       {/* MODAL / SLIDER */}
-      {isOpen && activeModel && (
-        <div className="twModal" onClick={close} role="dialog" aria-modal="true">
-          <div className="twModalInner" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="twModalClose"
-              type="button"
-              onClick={close}
-              aria-label="Schließen"
-            >
-              ✕
-            </button>
+      {isOpen && activeModel && (() => {
+        const { pre, model } = splitTitleForModelLine(activeModel.title);
 
-            <div className="twModalHeader">
-              <div className="twModalTitle">{activeModel.title}</div>
-              <div className="twModalLead">{activeModel.lead}</div>
-            </div>
+        return (
+          <div className="twModal" onClick={close} role="dialog" aria-modal="true">
+            <div className="twModalInner" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="twModalClose"
+                type="button"
+                onClick={close}
+                aria-label="Schließen"
+              >
+                ✕
+              </button>
 
-            <div className="twModalStage">
-              {activeModel.gallery.length > 1 && (
-                <button
-                  className="twNav twPrev"
-                  type="button"
-                  onClick={prev}
-                  aria-label="Vorheriges Bild"
-                >
-                  ‹
-                </button>
-              )}
+              <div className="twModalHeader">
+                {/* ✅ Modal: Desktop 1 Zeile, Mobile 2 Zeilen via CSS */}
+                <div className="twModalTitle">
+                  <span className="twModalTitlePre">{pre}</span>
+                  {model ? (
+                    <>
+                      {" "}
+                      <span className="twModalDash" aria-hidden="true">
+                        –
+                      </span>{" "}
+                      <span className="twModelBreak">{model}</span>
+                    </>
+                  ) : null}
+                </div>
 
-              <img
-                className="twModalImg"
-                src={activeModel.gallery[activeIndex].src}
-                alt={activeModel.gallery[activeIndex].alt}
-              />
-
-              {activeModel.gallery.length > 1 && (
-                <button
-                  className="twNav twNext"
-                  type="button"
-                  onClick={next}
-                  aria-label="Nächstes Bild"
-                >
-                  ›
-                </button>
-              )}
-            </div>
-
-            {activeModel.gallery.length > 1 && (
-              <div className="twThumbRow">
-                {activeModel.gallery.map((img, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`twThumb ${i === activeIndex ? "isActive" : ""}`}
-                    onClick={() => setActiveIndex(i)}
-                    aria-label={`Bild ${i + 1} anzeigen`}
-                  >
-                    <img src={img.src} alt={img.alt} />
-                  </button>
-                ))}
+                <div className="twModalLead">{activeModel.lead}</div>
               </div>
-            )}
+
+              <div className="twModalStage">
+                {activeModel.gallery.length > 1 && (
+                  <button
+                    className="twNav twPrev"
+                    type="button"
+                    onClick={prev}
+                    aria-label="Vorheriges Bild"
+                  >
+                    ‹
+                  </button>
+                )}
+
+                <img
+                  className="twModalImg"
+                  src={activeModel.gallery[activeIndex].src}
+                  alt={activeModel.gallery[activeIndex].alt}
+                />
+
+                {activeModel.gallery.length > 1 && (
+                  <button
+                    className="twNav twNext"
+                    type="button"
+                    onClick={next}
+                    aria-label="Nächstes Bild"
+                  >
+                    ›
+                  </button>
+                )}
+              </div>
+
+              {activeModel.gallery.length > 1 && (
+                <div className="twThumbRow">
+                  {activeModel.gallery.map((img, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      className={`twThumb ${i === activeIndex ? "isActive" : ""}`}
+                      onClick={() => setActiveIndex(i)}
+                      aria-label={`Bild ${i + 1} anzeigen`}
+                    >
+                      <img src={img.src} alt={img.alt} />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </section>
   );
 }
