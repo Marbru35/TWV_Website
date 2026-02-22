@@ -38,6 +38,7 @@ export default function ContactForm() {
   const submit = async (e) => {
     e.preventDefault();
 
+    // Alles "touched", damit Errors sichtbar werden
     setTouched({
       name: true,
       email: true,
@@ -65,16 +66,37 @@ export default function ContactForm() {
     setServerMsg("");
 
     try {
-      // TODO: Backend/Service einhängen
-      // await fetch("/api/contact", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(values) });
+      // ✅ Azure Static Web Apps: Functions sind unter /api/<name> erreichbar
+      // -> deine Function heißt "mail" => /api/mail
+      const res = await fetch("/api/mail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-      await new Promise((r) => setTimeout(r, 600)); // Demo
+      // Antwort robust auslesen (JSON oder Text)
+      const contentType = res.headers.get("content-type") || "";
+      const payload = contentType.includes("application/json")
+        ? await res.json()
+        : await res.text();
+
+      if (!res.ok) {
+        // bevorzugt { error: "..." } vom Backend anzeigen
+        const msg =
+          (payload && typeof payload === "object" && payload.error) ||
+          (typeof payload === "string" && payload) ||
+          `Serverfehler (${res.status})`;
+        throw new Error(msg);
+      }
+
       setStatus("success");
       setValues(initial);
       setTouched({});
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setServerMsg("Senden fehlgeschlagen. Bitte erneut versuchen oder anrufen.");
+      setServerMsg(
+        err?.message || "Senden fehlgeschlagen. Bitte erneut versuchen oder anrufen."
+      );
     }
   };
 
@@ -211,26 +233,20 @@ export default function ContactForm() {
           onBlur={() => onBlur("occasion")}
           placeholder="z.B. Hochzeit, Firmenevent …"
         />
-        {showError("occasion") && (
-          <div className="field__error">{errors.occasion}</div>
-        )}
+        {showError("occasion") && <div className="field__error">{errors.occasion}</div>}
       </div>
 
       <div className="field">
         <label className="field__label">Nachricht</label>
         <textarea
-          className={`input input--textarea ${
-            showError("message") ? "input--error" : ""
-          }`}
+          className={`input input--textarea ${showError("message") ? "input--error" : ""}`}
           value={values.message}
           onChange={(e) => setField("message", e.target.value)}
           onBlur={() => onBlur("message")}
           rows={5}
           placeholder="Kurz: Dauer, Zufahrt, Besonderheiten, etc."
         />
-        {showError("message") && (
-          <div className="field__error">{errors.message}</div>
-        )}
+        {showError("message") && <div className="field__error">{errors.message}</div>}
       </div>
 
       <label className="checkbox">
@@ -242,9 +258,7 @@ export default function ContactForm() {
         />
         <span>Ich stimme der Verarbeitung meiner Daten gemäß Datenschutz zu.</span>
       </label>
-      {showError("consent") && (
-        <div className="field__error">{errors.consent}</div>
-      )}
+      {showError("consent") && <div className="field__error">{errors.consent}</div>}
 
       <div className="form__actions">
         <button className="btn" type="submit" disabled={status === "sending"}>
@@ -252,9 +266,7 @@ export default function ContactForm() {
         </button>
 
         <div className="form__hint">
-          {status === "success" && (
-            <span className="ok">Danke! Wir melden uns zeitnah.</span>
-          )}
+          {status === "success" && <span className="ok">Danke! Wir melden uns zeitnah.</span>}
           {status === "error" && <span className="bad">{serverMsg}</span>}
         </div>
       </div>
@@ -262,15 +274,7 @@ export default function ContactForm() {
   );
 }
 
-function Field({
-  label,
-  value,
-  onChange,
-  onBlur,
-  error,
-  type = "text",
-  placeholder,
-}) {
+function Field({ label, value, onChange, onBlur, error, type = "text", placeholder }) {
   return (
     <div className="field">
       <label className="field__label">{label}</label>
