@@ -16,6 +16,9 @@ import nonAutark111_3 from "../assets/nonAutark111/non_autark_111_3.jpeg";
 import autark111_1 from "../assets/autark111/autark_111_1.jpeg";
 import autark111_2 from "../assets/autark111/autark_111_2.jpeg";
 
+// Urinal Turm 4
+import urinalTurm4_1 from "../assets/urinalTurm4/urinal_turm_4.png";
+
 export const models = [
   {
     slug: "anschluss-3-1-3",
@@ -91,6 +94,22 @@ export const models = [
     gallery: [
       { src: autark111_1, alt: "Toilettenwagen 1-1-1" },
       { src: autark111_2, alt: "Toilettenwagen 1-1-1" },
+    ],
+  },
+  {
+    slug: "urinal-turm-4",
+    title: "Urinalturm 4",
+    lead: "Ein Urinal Turm mit 4 Urinalen.",
+
+
+    requires: ["Ggf. Abwasseranschluss"],
+    notes: ["Das freistehende Urinal ist für 4 Benutzer gleichzeitig nutzbar. Unsere Urinale können gegebenenfalls bequem mit an das Abwasser angeschlossen werden und somit eine sehr gute Ergänzung zum WC-Wagen, um Wartezeiten zu verkürzen."],
+    includes: [
+      "Endreinigung"
+    ],
+
+    gallery: [
+      { src: urinalTurm4_1, alt: "Urinal Turm 4" }
     ],
   },
 ];

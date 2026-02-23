@@ -27,8 +27,9 @@ export function validateContact(values) {
   if (values.people && !/^\d{1,5}$/.test(values.people.trim()))
     errors.people = "Bitte Personenzahl als Zahl angeben.";
 
-  // Modell
-  if (!values.model) errors.model = "Bitte Modell auswählen.";
+  // ✅ Modell: mind. 1 muss gewählt sein (Array)
+  const models = Array.isArray(values.model) ? values.model : [];
+  if (models.length === 0) errors.model = "Bitte mindestens ein Modell auswählen.";
 
   // Anlass
   if (!values.occasion.trim()) errors.occasion = "Bitte Anlass angeben.";

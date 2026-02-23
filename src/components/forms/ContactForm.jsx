@@ -1,6 +1,13 @@
 import { useMemo, useState } from "react";
 import { validateContact } from "./formSchema";
 
+const MODEL_OPTIONS = [
+  "Modell 3-1-3",
+  "Modell 1-1-1",
+  "Autarkes Modell 1-1-1",
+  "Urinalturm 4",
+];
+
 const initial = {
   name: "",
 
@@ -15,7 +22,10 @@ const initial = {
   people: "",
   email: "",
   phone: "",
-  model: "",
+
+  // ✅ jetzt Multi: Array statt String
+  model: [],
+
   occasion: "",
   message: "",
   consent: false,
@@ -32,6 +42,27 @@ export default function ContactForm() {
   const setField = (name, value) => setValues((v) => ({ ...v, [name]: value }));
   const onBlur = (name) => setTouched((t) => ({ ...t, [name]: true }));
   const showError = (field) => touched[field] && errors[field];
+
+  // ✅ Toggle für einzelne Modelle
+  const toggleModel = (label) => {
+    setValues((v) => {
+      const curr = Array.isArray(v.model) ? v.model : [];
+      const next = curr.includes(label)
+        ? curr.filter((x) => x !== label)
+        : [...curr, label];
+      return { ...v, model: next };
+    });
+  };
+
+  // ✅ Alle auswählen / abwählen
+  const allSelected = values.model.length === MODEL_OPTIONS.length;
+  const toggleAllModels = () => {
+    setValues((v) => ({
+      ...v,
+      model: allSelected ? [] : [...MODEL_OPTIONS],
+    }));
+    setTouched((t) => ({ ...t, model: true }));
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -87,9 +118,7 @@ export default function ContactForm() {
       setTouched({});
     } catch (err) {
       setStatus("error");
-      setServerMsg(
-        err?.message || "Senden fehlgeschlagen. Bitte erneut versuchen."
-      );
+      setServerMsg(err?.message || "Senden fehlgeschlagen. Bitte erneut versuchen.");
     }
   };
 
@@ -179,7 +208,7 @@ export default function ContactForm() {
           <Field
             label="Ort"
             value={values.delCity}
-            onChange={(v) => setField("delCity", v)}
+          onChange={(v) => setField("delCity", v)}
             onBlur={() => onBlur("delCity")}
             error={showError("delCity")}
             placeholder="Musterstadt"
@@ -197,19 +226,39 @@ export default function ContactForm() {
           placeholder="z.B. 50"
         />
 
+        {/* ✅ Modell Multi-Select */}
         <div className="field">
-          <label className="field__label">Modell</label>
-          <select
-            className={`input ${showError("model") ? "input--error" : ""}`}
-            value={values.model}
-            onChange={(e) => setField("model", e.target.value)}
-            onBlur={() => onBlur("model")}
-          >
-            <option value="">Bitte wählen…</option>
-            <option value="Modell 3-1-3">Modell 3-1-3</option>
-            <option value="Modell 1-1-1">Modell 1-1-1</option>
-            <option value="Autarkes Modell 1-1-1">Autarkes Modell 1-1-1</option>
-          </select>
+          <div className="field__labelRow">
+            <label className="field__label">Modelle</label>
+
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={toggleAllModels}
+              onBlur={() => onBlur("model")}
+              style={{ padding: "6px 10px", fontSize: "0.9rem" }}
+            >
+              {allSelected ? "Alle abwählen" : "Alle auswählen"}
+            </button>
+          </div>
+
+          <div className={`multi ${showError("model") ? "multi--error" : ""}`}>
+            {MODEL_OPTIONS.map((m) => {
+              const checked = values.model.includes(m);
+              return (
+                <label key={m} className="multi__item">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleModel(m)}
+                    onBlur={() => onBlur("model")}
+                  />
+                  <span>{m}</span>
+                </label>
+              );
+            })}
+          </div>
+
           {showError("model") && <div className="field__error">{errors.model}</div>}
         </div>
       </div>
@@ -223,7 +272,9 @@ export default function ContactForm() {
           onBlur={() => onBlur("occasion")}
           placeholder="z.B. Hochzeit, Firmenevent …"
         />
-        {showError("occasion") && <div className="field__error">{errors.occasion}</div>}
+        {showError("occasion") && (
+          <div className="field__error">{errors.occasion}</div>
+        )}
       </div>
 
       <div className="field">
@@ -236,7 +287,9 @@ export default function ContactForm() {
           rows={5}
           placeholder="Kurz: Dauer, Zufahrt, Besonderheiten, etc."
         />
-        {showError("message") && <div className="field__error">{errors.message}</div>}
+        {showError("message") && (
+          <div className="field__error">{errors.message}</div>
+        )}
       </div>
 
       <label className="checkbox">
@@ -256,7 +309,9 @@ export default function ContactForm() {
         </button>
 
         <div className="form__hint">
-          {status === "success" && <span className="ok">Danke! Wir melden uns zeitnah.</span>}
+          {status === "success" && (
+            <span className="ok">Danke! Wir melden uns zeitnah.</span>
+          )}
           {status === "error" && <span className="bad">{serverMsg}</span>}
         </div>
       </div>

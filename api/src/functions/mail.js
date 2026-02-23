@@ -47,7 +47,10 @@ app.http("mail", {
 
       await authentification_.verify();
 
-      const subject = `Anfrage - TWV Viola (${data.model || "kein Modell"})`;
+      const models = Array.isArray(data.model) ? data.model : (data.model ? [data.model] : []);
+      const modelsText = models.length ? models.join(", ") : "-";
+
+      const subject = `Anfrage - TWV Viola (${models.length ? models[0] : "kein Modell"})`;
 
       const html = `
         <h2>Neue Anfrage über das Kontaktformular</h2>
@@ -71,7 +74,7 @@ app.http("mail", {
         <h3>Eckdaten</h3>
         <ul>
           <li><b>Personenzahl:</b> ${escapeHtml(data.people || "-")}</li>
-          <li><b>Modell:</b> ${escapeHtml(data.model || "-")}</li>
+          <li><b>Modelle:</b> ${escapeHtml(modelsText)}</li>
           <li><b>Anlass:</b> ${escapeHtml(data.occasion || "-")}</li>
         </ul>
 
@@ -82,9 +85,9 @@ app.http("mail", {
       const mailOptions = {
         from: "hobbitviola@gmail.com",
         to: "twv-viola@web.de",
-        subject: subject,
-        html: html,
-        replyTo: data.email
+        subject,
+        html,
+        replyTo: data.email,
       };
 
       const info = await authentification_.sendMail(mailOptions);
