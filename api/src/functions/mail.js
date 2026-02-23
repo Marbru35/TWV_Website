@@ -12,7 +12,6 @@ app.http("mail", {
   authLevel: "anonymous",
   handler: async (request, context) => {
     try {
-      // 1) JSON Body lesen
       const contentType = request.headers.get("content-type") || "";
       if (!contentType.toLowerCase().includes("application/json")) {
         return {
@@ -28,7 +27,6 @@ app.http("mail", {
 
       const data = await request.json();
 
-      // 2) Minimal-Validierung
       if (!data?.consent) {
         return {
           status: 400,
@@ -45,27 +43,18 @@ app.http("mail", {
         };
       }
 
-      // 3) Config aus Env (so wie du es schon hast)
-      // Du nutzt zwar SMTP_* Namen, aber hier sind es einfach nur Werte für Gmail-Auth.
-      const user = requiredEnv("SMTP_USER");   // muss ein Gmail-Konto sein
-      const pass = requiredEnv("SMTP_PASS");   // App-Passwort (oder OAuth2, aber hier: App-Passwort)
-      const mailTo = requiredEnv("MAIL_TO");
+      const pass = requiredEnv("SMTP_PASS");
 
-      // 4) Nodemailer Transporter (EXAKT wie von dir gewünscht)
       const authentification_ = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        pot: 587,
-        secure: false,
+        service: "gmail",
         auth: {
-          user: user,
+          user: "test.casehallo@gmail.com",
           pass: pass,
         },
       });
 
-      // Optional aber sehr hilfreich: prüft Login direkt (liefert klare Fehler wie EAUTH)
       await authentification_.verify();
 
-      // 5) Inhalt bauen
       const subject = `Anfrage - TWV Viola (${data.model || "kein Modell"})`;
 
       const html = `
@@ -98,16 +87,13 @@ app.http("mail", {
         <p style="white-space:pre-wrap">${escapeHtml(data.message || "-")}</p>
       `;
 
-      // 6) mailOptions (EXAKT wie im Screenshot-Stil)
       const mailOptions = {
-        from: user,        // sichtbarer Absender
-        to: user,            // Empfänger
+        from: "test.casehallo@gmail.com",
+        to: "marlon.spiess@outlook.com",
         subject: subject,
         html: html,
-        replyTo: data.email,   // Antworten gehen an den Formular-Absender
       };
 
-      // 7) Senden (korrekt: mailOptions direkt übergeben, nicht {mailOptions: ...})
       const info = await authentification_.sendMail(mailOptions);
       context.log("Mail sent:", info?.messageId || info);
 
@@ -119,7 +105,6 @@ app.http("mail", {
     } catch (err) {
       context.log("MAIL ERROR:", err);
 
-      // Für Debug: echte Fehlermeldung zurückgeben (ohne Secrets)
       return {
         status: 500,
         headers: { "Content-Type": "application/json; charset=utf-8" },
