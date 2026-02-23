@@ -53,7 +53,9 @@ app.http("mail", {
 
       // 4) Nodemailer Transporter (EXAKT wie von dir gewünscht)
       const authentification_ = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        pot: 587,
+        secure: false,
         auth: {
           user: user,
           pass: pass,
@@ -99,7 +101,7 @@ app.http("mail", {
       // 6) mailOptions (EXAKT wie im Screenshot-Stil)
       const mailOptions = {
         from: user,        // sichtbarer Absender
-        to: mailTo,            // Empfänger
+        to: user,            // Empfänger
         subject: subject,
         html: html,
         replyTo: data.email,   // Antworten gehen an den Formular-Absender
