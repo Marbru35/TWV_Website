@@ -16,29 +16,24 @@
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* Breite anpassen */
 .contactSection .container {
   width: min(1440px, calc(100% - 120px));
   margin-inline: auto;
 }
 
-/* Abstand Hinweis -> Formular */
 .contactHint {
   margin-bottom: 14px;
 }
 
-/* Cards bleiben hell */
 .contactSection .card {
   background: rgba(255, 255, 255, 0.96);
   border-color: rgba(20, 28, 40, 0.10);
 }
 
-/* Card-Typo wieder dunkel */
 .contactSection .card .muted {
   color: rgba(20, 28, 40, 0.66);
 }
 
-/* Desktop */
 .contactSection {
   font-size: 18px;
   line-height: 1.55;
@@ -78,13 +73,11 @@
   padding: 12px 18px;
 }
 
-/* Form nicht künstlich schmal */
 .contactSection .form {
   width: 100%;
   max-width: none;
 }
 
-/* Form-Abschnittstitel */
 .form__sectionTitle {
   margin: 18px 0 10px;
   font-size: 15px;
@@ -92,12 +85,10 @@
   color: rgba(20, 28, 40, 0.78);
 }
 
-/* PLZ/Ort Block etwas enger */
 .grid--tight {
   gap: 12px;
 }
 
-/* 3-Spalten Grid für Name/Email/Handy */
 .grid--3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -110,7 +101,6 @@
   }
 }
 
-/* ✅ Mobile: alles kleiner */
 @media (max-width: 520px) {
   .contactSection .container {
     width: calc(100% - 34px);
@@ -166,7 +156,6 @@
   }
 }
 
-/* ✅ iPhone SE noch enger */
 @media (max-width: 420px) {
   .contactSection .container {
     width: calc(100% - 26px);

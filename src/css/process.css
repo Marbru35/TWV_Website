@@ -206,7 +206,6 @@
   line-height: 1.55;
 }
 
-/* ✅ iPhone: kompakter */
 @media (max-width: 420px) {
   .process2__grid { gap: 12px; }
   .process2__steps { gap: 8px; }

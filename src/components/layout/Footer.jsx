@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
-  // null | "impressum" | "datenschutz"
   const [panel, setPanel] = useState(null);
 
   const footerRef = useRef(null);
@@ -15,12 +14,9 @@ export default function Footer() {
   useEffect(() => {
     if (!isOpen) return;
 
-    // ✅ Datenschutz: NICHT ans Seitenende, sondern zum Panel-Anfang (Titelbereich)
     if (panel === "datenschutz") {
-      // erst Footer in View holen (damit Panel überhaupt im DOM/Viewport-Kontext ist)
       footerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-      // dann nach kurzer Zeit exakt auf Panel-Start
       const t = window.setTimeout(() => {
         panelTopRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -31,7 +27,6 @@ export default function Footer() {
       return () => window.clearTimeout(t);
     }
 
-    // ✅ Impressum: wie gewünscht ganz nach unten scrollen
     if (panel === "impressum") {
       footerRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
 
@@ -48,7 +43,6 @@ export default function Footer() {
 
   return (
     <footer ref={footerRef} className={styles.footer}>
-      {/* Top-Zeile */}
       <div className={styles.bar}>
         <div className={styles.barInner}>
           <div className={styles.left}>
@@ -96,14 +90,12 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Gemeinsames Panel */}
       <div
         id="footer-panel"
         className={`${styles.panel} ${isOpen ? styles.panelOpen : ""}`}
       >
         <div className={styles.panelInner}>
           <div className={styles.content}>
-            {/* ✅ Das ist der exakte "Startpunkt" für Datenschutz-Scroll */}
             <div ref={panelTopRef} />
 
             <div className={styles.head}>
@@ -169,99 +161,136 @@ export default function Footer() {
               <div className={styles.legal}>
                 <p className={styles.lead}>
                   Diese Datenschutzerklärung informiert über Art, Umfang und Zweck
-                  der Verarbeitung personenbezogener Daten beim Besuch dieser Website.
+                  der Verarbeitung personenbezogener Daten beim Besuch dieser Website
+                  sowie bei Kontaktaufnahme über das Kontaktformular.
                 </p>
 
                 <h4>1. Verantwortlicher</h4>
                 <p>
-                  Robin Viola (TWV Viola)<br />
-                  Nikolausstraße 5, 51688 Wipperfürth, Deutschland<br />
-                  Telefon: +49 172 5401895<br />
+                  Robin Viola (TWV Viola)
+                  <br />
+                  Nikolausstraße 5, 51688 Wipperfürth, Deutschland
+                  <br />
+                  Telefon: +49 172 5401895
+                  <br />
                   E-Mail: twv-viola@web.de
                 </p>
 
-                <h4>2. Hosting</h4>
+                <h4>2. Hosting über Microsoft Azure (statische Website)</h4>
                 <p>
-                  Diese Website wird bei einem Hosting-Anbieter betrieben. Beim Aufruf der Website
-                  verarbeitet der Hosting-Anbieter personenbezogene Daten (z. B. IP-Adresse, Zeitpunkt,
-                  angeforderte Datei), um die Website bereitzustellen und zu sichern.
+                  Diese Website wird als statische Website über Microsoft Azure betrieben
+                  (z. B. „Azure Static Web Apps“ bzw. „Azure Static Website“). Beim Aufruf
+                  der Website werden technisch erforderliche Daten verarbeitet, um Inhalte
+                  auszuliefern und die Sicherheit/Stabilität zu gewährleisten. Dazu können
+                  insbesondere gehören: IP-Adresse, Datum/Uhrzeit des Zugriffs, angeforderte
+                  Ressource/URL, Referrer-URL, Browser-/Geräteinformationen sowie Statuscodes.
                 </p>
-                <p className={styles.note}>
-                  Hinweis: Trage hier deinen Hosting-Anbieter inkl. Anschrift ein (z. B. IONOS, netcup, Vercel, etc.).
-                  Falls du einen Auftragsverarbeitungsvertrag (AVV) hast, ist das der übliche DSGVO-Weg.
+                <p>
+                  Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an
+                  sicherem und stabilem Betrieb der Website).
                 </p>
 
                 <h4>3. Server-Logfiles</h4>
                 <p>
-                  Bei jedem Zugriff werden durch den Server bzw. Hosting-Anbieter Logdaten verarbeitet
-                  (z. B. IP-Adresse, Datum/Uhrzeit, Referrer-URL, Browser, Betriebssystem).
-                  Zweck: technische Bereitstellung, Fehleranalyse und Schutz vor Missbrauch/Angriffen.
+                  Protokolldaten (Server-Logfiles) fallen typischerweise beim Hosting an.
+                  Eine Zusammenführung dieser Daten mit anderen Datenquellen erfolgt nicht
+                  durch uns. Die Speicherdauer richtet sich nach den Einstellungen/Standard-
+                  prozessen des Hosting-Anbieters und ist in der Regel zeitlich begrenzt.
                 </p>
                 <p>
-                  Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an sicherem Betrieb).
-                  Speicherdauer: i. d. R. zeitlich begrenzt gemäß Hosting-Konfiguration.
+                  Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (Sicherheit, Fehleranalyse,
+                  Missbrauchs- und Angriffsabwehr).
                 </p>
 
-                <h4>4. Kontaktaufnahme</h4>
+                <h4>4. Kontaktformular (Azure Functions) & E-Mail-Versand</h4>
                 <p>
-                  Wenn du per E-Mail oder Telefon Kontakt aufnimmst, verarbeiten wir die von dir mitgeteilten Daten
-                  (z. B. Name, Kontaktdaten, Inhalt der Anfrage), um die Anfrage zu bearbeiten.
+                  Wenn du uns über das Kontaktformular schreibst, werden die von dir eingegebenen
+                  Daten (z. B. Name, E-Mail-Adresse, Telefonnummer, Anlass/Ort/Datum, Nachricht)
+                  verarbeitet, um deine Anfrage zu bearbeiten und zu beantworten. Die Übermittlung
+                  erfolgt an eine von uns betriebene API (Azure Functions). Die Informationen werden
+                  anschließend ausschließlich an unsere eigene E-Mail-Adresse des Gewerbes weitergeleitet,
+                  damit wir die Anfrage bearbeiten können.
                 </p>
                 <p>
-                  Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche/vertragliche Kommunikation)
-                  oder Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an Beantwortung).
-                  Speicherdauer: solange erforderlich zur Bearbeitung und im Rahmen gesetzlicher Pflichten.
+                  Wir speichern die Kontaktformular-Daten nicht in einer Datenbank auf der Website.
+                  Die Daten liegen nach dem Absenden im Wesentlichen in der übermittelten E-Mail und
+                  in den Postfächern/IT-Systemen, die zur Bearbeitung erforderlich sind.
+                </p>
+                <p>
+                  Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag,
+                  Kommunikation zur Anfrage und Angebotserstellung) und – soweit einschlägig –
+                  Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an effizienter Kommunikation).
                 </p>
 
-                <h4>5. Cookies / Tracking</h4>
+                <h4>5. Speicherdauer & Löschung</h4>
                 <p>
-                  Diese Website setzt nach aktuellem Stand keine Cookies zu Werbe-/Tracking-Zwecken ein.
-                  Technisch notwendige Cookies können je nach eingesetzten Komponenten/Hosting vorkommen.
-                </p>
-                <p className={styles.note}>
-                  Falls du z. B. Google Analytics, Meta Pixel, YouTube, Google Maps, reCAPTCHA oder einen Consent-Banner nutzt:
-                  Das muss hier konkret ergänzt werden (Anbieter, Zweck, Rechtsgrundlage, Empfänger, Drittlandtransfer).
+                  Personenbezogene Daten aus Anfragen verarbeiten wir nur so lange, wie dies zur
+                  Bearbeitung der Anfrage und ggf. zur Durchführung des Auftrags erforderlich ist.
+                  Nach Abschluss der Bearbeitung bzw. nach Durchführung des Auftrags werden die Daten
+                  gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten (z. B. handels- oder
+                  steuerrechtliche Pflichten für abrechnungsrelevante Unterlagen) entgegenstehen.
                 </p>
 
-                <h4>6. Empfänger von Daten</h4>
+                <h4>6. Empfänger / Kategorien von Empfängern</h4>
                 <p>
-                  Empfänger können technische Dienstleister sein (insb. Hosting), soweit dies zur Bereitstellung
-                  und zum Betrieb erforderlich ist.
+                  Zur Bereitstellung und zum Betrieb dieser Website sowie zur Bearbeitung von Anfragen
+                  können folgende Empfänger beteiligt sein:
                 </p>
+                <ul>
+                  <li>
+                    Microsoft Azure als Hosting-/Plattformanbieter (statische Website, Azure Functions)
+                  </li>
+                  <li>
+                    E-Mail-Dienst/Provider, über den die Kontaktformular-Nachricht technisch zugestellt
+                    wird (Empfänger ist ausschließlich unsere eigene E-Mail-Adresse)
+                  </li>
+                </ul>
 
                 <h4>7. Drittlandübermittlung</h4>
                 <p>
-                  Eine Übermittlung in Drittländer (außerhalb EU/EWR) findet nur statt, wenn Dienste eingesetzt werden,
-                  deren Anbieter dort verarbeiten oder Unterauftragsverarbeiter dort einsetzen. In dem Fall sind geeignete
-                  Garantien erforderlich (z. B. EU-Standardvertragsklauseln).
+                  Eine Übermittlung in Drittländer (außerhalb EU/EWR) findet nur statt, wenn Dienstleister
+                  oder deren Unterauftragnehmer Daten außerhalb der EU/EWR verarbeiten. In diesen Fällen
+                  erfolgt die Verarbeitung nur im Rahmen der gesetzlichen Vorgaben (z. B. geeignete Garantien,
+                  soweit erforderlich).
                 </p>
 
-                <h4>8. Deine Rechte</h4>
+                <h4>8. Datensicherheit</h4>
+                <p>
+                  Wir treffen angemessene technische und organisatorische Maßnahmen, um deine Daten zu
+                  schützen. Die Übertragung von Website-Inhalten erfolgt üblicherweise verschlüsselt
+                  (HTTPS/TLS). Der E-Mail-Versand erfolgt in der Regel ebenfalls transportverschlüsselt
+                  (TLS), abhängig von den beteiligten Mailservern.
+                </p>
+
+                <h4>9. Cookies / Tracking</h4>
+                <p>
+                  Diese Website nutzt nach aktuellem Stand kein Tracking, keine Profilbildung und keine
+                  Werbe-Cookies. Sofern technisch notwendige Cookies durch Hosting/Plattform-Komponenten
+                  gesetzt werden sollten, dienen sie ausschließlich dem technischen Betrieb.
+                </p>
+
+                <h4>10. Deine Rechte</h4>
                 <ul>
                   <li>Auskunft (Art. 15 DSGVO)</li>
                   <li>Berichtigung (Art. 16 DSGVO)</li>
                   <li>Löschung (Art. 17 DSGVO)</li>
-                  <li>Einschränkung (Art. 18 DSGVO)</li>
+                  <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
                   <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
-                  <li>Widerspruch (Art. 21 DSGVO), soweit Art. 6 Abs. 1 lit. f DSGVO Grundlage ist</li>
-                  <li>Widerruf einer Einwilligung (Art. 7 Abs. 3 DSGVO), falls erteilt</li>
+                  <li>
+                    Widerspruch (Art. 21 DSGVO), soweit die Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO
+                    beruht
+                  </li>
+                  <li>Widerruf einer Einwilligung (Art. 7 Abs. 3 DSGVO), sofern erteilt</li>
                 </ul>
 
-                <h4>9. Beschwerderecht</h4>
+                <h4>11. Beschwerderecht</h4>
                 <p>
                   Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde zu beschweren (Art. 77 DSGVO).
                 </p>
 
-                <h4>10. Stand und Änderungen</h4>
+                <h4>12. Stand</h4>
                 <p>
-                  Stand: {new Date().toLocaleDateString("de-DE")}. Wir passen diese Datenschutzerklärung an,
-                  wenn sich Rechtslage oder Verarbeitung ändert.
-                </p>
-
-                <p className={styles.disclaimer}>
-                  Diese Vorlage deckt typische Standardfälle ab. Für „echte“ Rechtssicherheit müssen deine
-                  tatsächlich verwendeten Dienste (Hosting, Analytics, Fonts, Maps, Videos, Formulare, CDN etc.)
-                  exakt benannt werden.
+                  Stand: {new Date().toLocaleDateString("de-DE")}.
                 </p>
               </div>
             )}

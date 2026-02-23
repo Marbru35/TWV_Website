@@ -1,12 +1,6 @@
 const { app } = require("@azure/functions");
 const nodemailer = require("nodemailer");
 
-function requiredEnv(name) {
-  const v = process.env[name];
-  if (!v) throw new Error(`Missing env var: ${name}`);
-  return v;
-}
-
 app.http("mail", {
   methods: ["POST"],
   authLevel: "anonymous",
@@ -43,13 +37,11 @@ app.http("mail", {
         };
       }
 
-      const pass = requiredEnv("SMTP_PASS");
-
       const authentification_ = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "test.casehallo@gmail.com",
-          pass: pass,
+          user: "hobbitviola@gmail.com",
+          pass: process.env.SMTP_PASS,
         },
       });
 
@@ -88,10 +80,11 @@ app.http("mail", {
       `;
 
       const mailOptions = {
-        from: "test.casehallo@gmail.com",
-        to: "marlon.spiess@outlook.com",
+        from: "hobbitviola@gmail.com",
+        to: "twv-viola@web.de",
         subject: subject,
         html: html,
+        replyTo: data.email
       };
 
       const info = await authentification_.sendMail(mailOptions);

@@ -32,6 +32,7 @@ export const models = [
       "Handtuchpapier",
       "Seife",
       "Endreinigung",
+      "Heizung"
     ],
 
     gallery: [
@@ -59,6 +60,7 @@ export const models = [
       "Handtuchpapier",
       "Seife",
       "Endreinigung",
+      "Heizung"
     ],
 
     gallery: [
@@ -82,7 +84,8 @@ export const models = [
       "Toilettenpapier",
       "Handtuchpapier",
       "Seife",
-      "Endreinigung"
+      "Endreinigung",
+      "Heizung"
     ],
 
     gallery: [

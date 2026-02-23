@@ -14,7 +14,6 @@
   background-position: center center;
 }
 
-/* Parallax nur auf Y */
 .hero--image {
   background-position: center calc(50% + var(--heroParallax, 0px));
 }
@@ -42,7 +41,6 @@
     );
 }
 
-/* Center wrapper */
 .heroCenter {
   position: relative;
   z-index: 1;
@@ -52,7 +50,6 @@
   padding: 0 20px;
 }
 
-/* Panel */
 .heroPanel {
   width: 100%;
   max-width: 900px;
@@ -76,7 +73,7 @@
 .heroKicker {
   display: inline-flex;
   align-items: center;
-  gap: 18px; /* Abstand Text zu Linien */
+  gap: 18px;
   margin-bottom: 16px;
 
   font-weight: 800;
@@ -88,7 +85,6 @@
   line-height: 1.2;
 }
 
-/* Linie links */
 .heroKicker::before,
 .heroKicker::after {
   content: "";
@@ -97,7 +93,6 @@
   background: rgba(255, 255, 255, 0.35);
 }
 
-/* größer auf Desktop */
 @media (min-width: 980px) {
   .heroKicker {
     font-size: 15px;
@@ -138,7 +133,6 @@
   hyphens: none;
 }
 
-/* jedes Wort bleibt zusammen */
 .heroTitleWord {
   display: inline-block;
   white-space: nowrap;

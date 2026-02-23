@@ -8,14 +8,12 @@
   color: rgba(20, 28, 40, 0.92);
 }
 
-/* Cards/Section horizontal breiter machen */
 .toiletIntro--flat .container {
   max-width: 1440px;
   width: calc(100% - 120px);
   margin: 0 auto;
 }
 
-/* Was suchen Sie */
 .searchBlock--left {
   max-width: 100%;
   margin: 0 0 60px;
@@ -38,7 +36,6 @@
   color: rgba(20, 28, 40, 0.95);
 }
 
-/* Unsere Toilettenwagen */
 .toiletIntroTitle {
   font-size: 45px;
   line-height: 1.1;
@@ -47,7 +44,6 @@
   color: rgba(20, 28, 40, 0.95);
 }
 
-/* Grid */
 .toiletCategories--flat {
   display: grid;
   grid-template-columns: 1fr;
@@ -98,7 +94,6 @@
   color: rgba(20, 28, 40, 0.95);
 }
 
-/* ✅ Modell-Teil separat steuerbar (Desktop inline) */
 .twModelBreak {
   display: inline;
   white-space: nowrap;
@@ -111,7 +106,6 @@
   color: rgba(20, 28, 40, 0.72);
 }
 
-/* Info Label */
 .twInfoLabel {
   font-size: 16px;
   font-weight: 850;
@@ -121,7 +115,6 @@
   margin: 0 0 12px;
 }
 
-/* Pills */
 .twPills {
   display: flex;
   flex-wrap: wrap;
@@ -140,7 +133,6 @@
   color: rgba(20, 28, 40, 0.88);
 }
 
-/* Hinweisbox */
 .twNote {
   margin-top: 14px;
   margin-bottom: 14px;
@@ -182,7 +174,6 @@
   color: rgba(0, 0, 128, 0.9);
 }
 
-/* Button */
 .toiletCardActions {
   margin-top: 22px;
 }
@@ -197,7 +188,6 @@
   cursor: pointer;
 }
 
-/* Bild */
 .toiletCardImage {
   border-radius: 14px;
   overflow: hidden;
@@ -212,7 +202,6 @@
   display: block;
 }
 
-/* ab 1540px und kleiner -> Bild unter Text */
 @media (max-width: 1540px) {
   .toiletCardLayout {
     grid-template-columns: 1fr;
@@ -235,7 +224,6 @@
   }
 }
 
-/* 980 */
 @media (max-width: 980px) {
   .toiletCardImage {
     min-width: 0;
@@ -253,7 +241,6 @@
   }
 }
 
-/* ✅ Mobile: Abstände wie Contact + Modell in neuer Zeile */
 @media (max-width: 520px) {
   .toiletIntro--flat .container {
     width: calc(100% - 34px);
@@ -346,7 +333,6 @@
   }
 }
 
-/* ✅ iPhone SE */
 @media (max-width: 420px) {
   .toiletIntro--flat .container {
     width: calc(100% - 26px);
@@ -389,7 +375,6 @@
   padding: 24px;
 }
 
-/* ✅ FIX: symmetrischer Abstand links/rechts auf “mittel-kleinen” Screens */
 .twModalInner {
   width: 100%;
   max-width: 1200px;
@@ -400,7 +385,6 @@
   position: relative;
 }
 
-/* Header */
 .twModalHeader {
   padding: 32px 36px 22px;
   border-bottom: 1px solid rgba(20, 28, 40, 0.08);
@@ -411,24 +395,19 @@
   font-weight: 800;
   letter-spacing: -0.3px;
   color: rgba(20, 28, 40, 0.96);
-
-  /* ✅ Platz für das X (verhindert Überdeckung) */
   padding-right: 64px;
 }
 
-/* ✅ Desktop/Tablet: Modell bleibt inline im Modal */
 .twModalTitle .twModelBreak {
   display: inline;
   white-space: nowrap;
   margin-top: 0;
 }
 
-/* Desktop Trenner " – " bleibt sichtbar */
 .twModalDash {
   display: inline;
 }
 
-/* Close */
 .twModalClose {
   position: absolute;
   top: 18px;
@@ -442,7 +421,6 @@
   cursor: pointer;
 }
 
-/* Stage */
 .twModalStage {
   background: #0b1020;
   display: flex;
@@ -458,7 +436,6 @@
   object-fit: contain;
 }
 
-/* Navigation */
 .twNav {
   position: absolute;
   top: 50%;
@@ -479,7 +456,6 @@
   right: 16px;
 }
 
-/* Thumbnails */
 .twThumbRow {
   padding: 22px 24px 26px;
   display: flex;
@@ -508,7 +484,6 @@
   border-color: #000080;
 }
 
-/* ✅ Modal Mobile: gleicher Innenabstand wie Cards + Titel umbrechen wie gewünscht */
 @media (max-width: 520px) {
   .twModal {
     padding: 14px;
@@ -529,7 +504,6 @@
     padding-right: 56px; /* X Platz */
   }
 
-  /* ✅ Mobile: wir wollen "… -" am Zeilenende + Modell in neuer Zeile */
   .twModalDash {
     display: none;
   }
@@ -592,7 +566,6 @@
   }
 }
 
-/* ✅ iPhone SE noch etwas enger */
 @media (max-width: 420px) {
   .twModal {
     padding: 10px;

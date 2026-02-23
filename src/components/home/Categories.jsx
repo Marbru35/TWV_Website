@@ -52,10 +52,8 @@ export default function Categories() {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, activeSlug]);
 
-  // ✅ "… – Modell X" oder "… - Modell X" -> { pre: "…", model: "Modell X" }
   function splitTitleForModelLine(title) {
     const t = String(title || "").trim();
     const match = t.match(/^(.*?)(?:\s*[–-]\s*)(Modell\s+.+)$/i);
@@ -70,7 +68,6 @@ export default function Categories() {
   return (
     <section className="toiletIntro--flat">
       <div className="container">
-        {/* Was suchen Sie */}
         <div className="searchBlock--left">
           <h2 className="searchTitle">Was suchen Sie?</h2>
           <p className="searchText">
@@ -101,7 +98,6 @@ export default function Categories() {
                       ) : null}
                     </h3>
 
-                    {/* ✅ Benötigt */}
                     {Array.isArray(m.requires) && m.requires.length > 0 && (
                       <div className="twInfoBlock">
                         <div className="twInfoLabel">Benötigt</div>
@@ -115,7 +111,6 @@ export default function Categories() {
                       </div>
                     )}
 
-                    {/* ✅ Hinweis */}
                     {Array.isArray(m.notes) && m.notes.length > 0 && (
                       <div className="twNote">
                         {m.notes.map((n, idx) => (
@@ -124,7 +119,6 @@ export default function Categories() {
                       </div>
                     )}
 
-                    {/* ✅ Inklusive */}
                     {Array.isArray(m.includes) && m.includes.length > 0 && (
                       <div className="twInfoBlock">
                         <div className="twInfoLabel">Inklusive</div>
@@ -174,7 +168,6 @@ export default function Categories() {
               </button>
 
               <div className="twModalHeader">
-                {/* ✅ Modal: Desktop 1 Zeile, Mobile 2 Zeilen via CSS */}
                 <div className="twModalTitle">
                   <span className="twModalTitlePre">{pre}</span>
                   {model ? (

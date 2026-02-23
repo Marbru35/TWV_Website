@@ -4,12 +4,10 @@ import { validateContact } from "./formSchema";
 const initial = {
   name: "",
 
-  // Rechnungsadresse
   billStreet: "",
   billZip: "",
   billCity: "",
 
-  // Lieferadresse (wo der Wagen hin soll)
   delStreet: "",
   delZip: "",
   delCity: "",
@@ -38,7 +36,6 @@ export default function ContactForm() {
   const submit = async (e) => {
     e.preventDefault();
 
-    // Alles "touched", damit Errors sichtbar werden
     setTouched({
       name: true,
       email: true,
@@ -66,22 +63,18 @@ export default function ContactForm() {
     setServerMsg("");
 
     try {
-      // ✅ Azure Static Web Apps: Functions sind unter /api/<name> erreichbar
-      // -> deine Function heißt "mail" => /api/mail
       const res = await fetch("/api/mail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
 
-      // Antwort robust auslesen (JSON oder Text)
       const contentType = res.headers.get("content-type") || "";
       const payload = contentType.includes("application/json")
         ? await res.json()
         : await res.text();
 
       if (!res.ok) {
-        // bevorzugt { error: "..." } vom Backend anzeigen
         const msg =
           (payload && typeof payload === "object" && payload.error) ||
           (typeof payload === "string" && payload) ||
@@ -95,14 +88,13 @@ export default function ContactForm() {
     } catch (err) {
       setStatus("error");
       setServerMsg(
-        err?.message || "Senden fehlgeschlagen. Bitte erneut versuchen oder anrufen."
+        err?.message || "Senden fehlgeschlagen. Bitte erneut versuchen."
       );
     }
   };
 
   return (
     <form onSubmit={submit} className="form">
-      {/* ✅ Ganz oben: Name | Email | Handy */}
       <div className="grid grid--3">
         <Field
           label="Name"
@@ -163,7 +155,6 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* Lieferadresse */}
       <div className="form__sectionTitle">Lieferadresse (wo der Wagen hin soll)</div>
 
       <div className="grid grid--2">
@@ -196,7 +187,6 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* Eckdaten */}
       <div className="grid grid--2">
         <Field
           label="Ungefähre Personenzahl"
@@ -216,9 +206,9 @@ export default function ContactForm() {
             onBlur={() => onBlur("model")}
           >
             <option value="">Bitte wählen…</option>
-            <option value="3-1-3">Modell 3-1-3</option>
-            <option value="1-1-1">Modell 1-1-1</option>
-            <option value="autark-1-1-1">Autarkes Modell 1-1-1</option>
+            <option value="Modell 3-1-3">Modell 3-1-3</option>
+            <option value="Modell 1-1-1">Modell 1-1-1</option>
+            <option value="Autarkes Modell 1-1-1">Autarkes Modell 1-1-1</option>
           </select>
           {showError("model") && <div className="field__error">{errors.model}</div>}
         </div>
