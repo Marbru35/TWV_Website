@@ -28,7 +28,7 @@ app.http("mail", {
 
       const data = await request.json();
 
-      // 2) Minimal-Validierung (Client validiert zwar, aber Server MUSS trotzdem prüfen)
+      // 2) Minimal-Validierung
       if (!data?.consent) {
         return {
           status: 400,
@@ -45,62 +45,70 @@ app.http("mail", {
         };
       }
 
-      // 3) SMTP Config aus Env
-      const host = requiredEnv("SMTP_HOST");
-      const port = Number(requiredEnv("SMTP_PORT"));
-      const secure = String(process.env.SMTP_SECURE || "").toLowerCase() === "true";
-      const user = requiredEnv("SMTP_USER");
-      const pass = requiredEnv("SMTP_PASS");
+      // 3) Config aus Env (so wie du es schon hast)
+      // Du nutzt zwar SMTP_* Namen, aber hier sind es einfach nur Werte für Gmail-Auth.
+      const user = requiredEnv("SMTP_USER");   // muss ein Gmail-Konto sein
+      const pass = requiredEnv("SMTP_PASS");   // App-Passwort (oder OAuth2, aber hier: App-Passwort)
       const mailTo = requiredEnv("MAIL_TO");
-      const mailFrom = requiredEnv("MAIL_FROM");
 
-      // 4) Nodemailer Transporter
-      const transporter = nodemailer.createTransport({
-        host,
-        port,
-        secure,
-        auth: { user, pass },
+      // 4) Nodemailer Transporter (EXAKT wie von dir gewünscht)
+      const authentification_ = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: user,
+          pass: pass,
+        },
       });
 
-      // 5) Mail-Inhalt bauen
-      const subject = `Neue Anfrage – ${data.name} (${data.model || "kein Modell"})`;
+      // Optional aber sehr hilfreich: prüft Login direkt (liefert klare Fehler wie EAUTH)
+      await authentification_.verify();
 
-      const text = [
-        "Neue Anfrage über das Kontaktformular",
-        "",
-        `Name: ${data.name}`,
-        `E-Mail: ${data.email}`,
-        `Telefon: ${data.phone}`,
-        "",
-        "Rechnungsadresse:",
-        `  Straße: ${data.billStreet || "-"}`,
-        `  PLZ/Ort: ${data.billZip || "-"} ${data.billCity || "-"}`,
-        "",
-        "Lieferadresse:",
-        `  Straße: ${data.delStreet || "-"}`,
-        `  PLZ/Ort: ${data.delZip || "-"} ${data.delCity || "-"}`,
-        "",
-        "Eckdaten:",
-        `  Personenzahl: ${data.people || "-"}`,
-        `  Modell: ${data.model || "-"}`,
-        `  Anlass: ${data.occasion || "-"}`,
-        "",
-        "Nachricht:",
-        `${data.message || "-"}`,
-      ].join("\n");
+      // 5) Inhalt bauen
+      const subject = `Anfrage - TWV Viola (${data.model || "kein Modell"})`;
 
-      // 6) Senden
-      const info = await transporter.sendMail({
-        from: mailFrom,
-        to: mailTo,
-        replyTo: data.email, // Antworten gehen direkt an den Absender
-        subject,
-        text,
-      });
+      const html = `
+        <h2>Neue Anfrage über das Kontaktformular</h2>
 
+        <p><b>Name:</b> ${escapeHtml(data.name)}</p>
+        <p><b>E-Mail:</b> ${escapeHtml(data.email)}</p>
+        <p><b>Telefon:</b> ${escapeHtml(data.phone)}</p>
+
+        <h3>Rechnungsadresse</h3>
+        <p>
+          ${escapeHtml(data.billStreet || "-")}<br/>
+          ${escapeHtml(data.billZip || "-")} ${escapeHtml(data.billCity || "-")}
+        </p>
+
+        <h3>Lieferadresse</h3>
+        <p>
+          ${escapeHtml(data.delStreet || "-")}<br/>
+          ${escapeHtml(data.delZip || "-")} ${escapeHtml(data.delCity || "-")}
+        </p>
+
+        <h3>Eckdaten</h3>
+        <ul>
+          <li><b>Personenzahl:</b> ${escapeHtml(data.people || "-")}</li>
+          <li><b>Modell:</b> ${escapeHtml(data.model || "-")}</li>
+          <li><b>Anlass:</b> ${escapeHtml(data.occasion || "-")}</li>
+        </ul>
+
+        <h3>Nachricht</h3>
+        <p style="white-space:pre-wrap">${escapeHtml(data.message || "-")}</p>
+      `;
+
+      // 6) mailOptions (EXAKT wie im Screenshot-Stil)
+      const mailOptions = {
+        from: user,        // sichtbarer Absender
+        to: mailTo,            // Empfänger
+        subject: subject,
+        html: html,
+        replyTo: data.email,   // Antworten gehen an den Formular-Absender
+      };
+
+      // 7) Senden (korrekt: mailOptions direkt übergeben, nicht {mailOptions: ...})
+      const info = await authentification_.sendMail(mailOptions);
       context.log("Mail sent:", info?.messageId || info);
 
-      // 7) Response ans Frontend
       return {
         status: 200,
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -108,11 +116,27 @@ app.http("mail", {
       };
     } catch (err) {
       context.log("MAIL ERROR:", err);
+
+      // Für Debug: echte Fehlermeldung zurückgeben (ohne Secrets)
       return {
         status: 500,
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({ ok: false, error: "Mail could not be sent." }),
+        body: JSON.stringify({
+          ok: false,
+          message: err?.message || String(err),
+          code: err?.code,
+          name: err?.name,
+        }),
       };
     }
   },
 });
+
+function escapeHtml(input) {
+  return String(input ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
