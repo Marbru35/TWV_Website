@@ -14,20 +14,23 @@ export function validateContact(values) {
   // Rechnungsadresse
   if (!values.billStreet.trim()) errors.billStreet = "Bitte Straße/Hausnummer angeben.";
   if (!values.billZip.trim()) errors.billZip = "Bitte PLZ angeben.";
-  else if (!/^\d{4,5}$/.test(values.billZip.trim())) errors.billZip = "Bitte gültige PLZ angeben.";
+  else if (!/^\d{4,5}$/.test(values.billZip.trim()))
+    errors.billZip = "Bitte gültige PLZ angeben.";
   if (!values.billCity.trim()) errors.billCity = "Bitte Ort angeben.";
 
   // Lieferadresse
   if (!values.delStreet.trim()) errors.delStreet = "Bitte Straße/Hausnummer angeben.";
   if (!values.delZip.trim()) errors.delZip = "Bitte PLZ angeben.";
-  else if (!/^\d{4,5}$/.test(values.delZip.trim())) errors.delZip = "Bitte gültige PLZ angeben.";
+  else if (!/^\d{4,5}$/.test(values.delZip.trim()))
+    errors.delZip = "Bitte gültige PLZ angeben.";
   if (!values.delCity.trim()) errors.delCity = "Bitte Ort angeben.";
 
-  // Optional: Personenzahl (wenn befüllt: Zahl)
-  if (values.people && !/^\d{1,5}$/.test(values.people.trim()))
+  // Personenzahl
+  if (!values.people.trim()) errors.people = "Bitte Personenzahl angeben.";
+  else if (!/^\d{1,5}$/.test(values.people.trim()))
     errors.people = "Bitte Personenzahl als Zahl angeben.";
 
-  // ✅ Modell: mind. 1 muss gewählt sein (Array)
+  // Modelle
   const models = Array.isArray(values.model) ? values.model : [];
   if (models.length === 0) errors.model = "Bitte mindestens ein Modell auswählen.";
 

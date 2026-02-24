@@ -23,7 +23,7 @@ const initial = {
   email: "",
   phone: "",
 
-  // ✅ jetzt Multi: Array statt String
+  // ✅ Multi: Array statt String
   model: [],
 
   occasion: "",
@@ -43,7 +43,6 @@ export default function ContactForm() {
   const onBlur = (name) => setTouched((t) => ({ ...t, [name]: true }));
   const showError = (field) => touched[field] && errors[field];
 
-  // ✅ Toggle für einzelne Modelle
   const toggleModel = (label) => {
     setValues((v) => {
       const curr = Array.isArray(v.model) ? v.model : [];
@@ -54,7 +53,6 @@ export default function ContactForm() {
     });
   };
 
-  // ✅ Alle auswählen / abwählen
   const allSelected = values.model.length === MODEL_OPTIONS.length;
   const toggleAllModels = () => {
     setValues((v) => ({
@@ -81,8 +79,9 @@ export default function ContactForm() {
       delCity: true,
 
       people: true,
-      model: true,
       occasion: true,
+
+      model: true,
       message: true,
       consent: true,
     });
@@ -208,7 +207,7 @@ export default function ContactForm() {
           <Field
             label="Ort"
             value={values.delCity}
-          onChange={(v) => setField("delCity", v)}
+            onChange={(v) => setField("delCity", v)}
             onBlur={() => onBlur("delCity")}
             error={showError("delCity")}
             placeholder="Musterstadt"
@@ -216,6 +215,7 @@ export default function ContactForm() {
         </div>
       </div>
 
+      {/* ✅ Personenzahl + Anlass nebeneinander */}
       <div className="grid grid--2">
         <Field
           label="Ungefähre Personenzahl"
@@ -226,55 +226,54 @@ export default function ContactForm() {
           placeholder="z.B. 50"
         />
 
-        {/* ✅ Modell Multi-Select */}
         <div className="field">
-          <div className="field__labelRow">
-            <label className="field__label">Modelle</label>
-
-            <button
-              type="button"
-              className="btn btn--ghost"
-              onClick={toggleAllModels}
-              onBlur={() => onBlur("model")}
-              style={{ padding: "6px 10px", fontSize: "0.9rem" }}
-            >
-              {allSelected ? "Alle abwählen" : "Alle auswählen"}
-            </button>
-          </div>
-
-          <div className={`multi ${showError("model") ? "multi--error" : ""}`}>
-            {MODEL_OPTIONS.map((m) => {
-              const checked = values.model.includes(m);
-              return (
-                <label key={m} className="multi__item">
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => toggleModel(m)}
-                    onBlur={() => onBlur("model")}
-                  />
-                  <span>{m}</span>
-                </label>
-              );
-            })}
-          </div>
-
-          {showError("model") && <div className="field__error">{errors.model}</div>}
+          <label className="field__label">Anlass</label>
+          <input
+            className={`input ${showError("occasion") ? "input--error" : ""}`}
+            value={values.occasion}
+            onChange={(e) => setField("occasion", e.target.value)}
+            onBlur={() => onBlur("occasion")}
+            placeholder="z.B. Hochzeit, Firmenevent …"
+          />
+          {showError("occasion") && (
+            <div className="field__error">{errors.occasion}</div>
+          )}
         </div>
       </div>
 
+      {/* ✅ Modelle in eigener Zeile */}
       <div className="field">
-        <label className="field__label">Anlass</label>
-        <input
-          className={`input ${showError("occasion") ? "input--error" : ""}`}
-          value={values.occasion}
-          onChange={(e) => setField("occasion", e.target.value)}
-          onBlur={() => onBlur("occasion")}
-          placeholder="z.B. Hochzeit, Firmenevent …"
-        />
-        {showError("occasion") && (
-          <div className="field__error">{errors.occasion}</div>
-        )}
+        <div className="field__labelRow">
+          <label className="field__label">Modelle</label>
+
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={toggleAllModels}
+            onBlur={() => onBlur("model")}
+          >
+            {allSelected ? "Alle abwählen" : "Alle auswählen"}
+          </button>
+        </div>
+
+        <div className={`multi ${showError("model") ? "multi--error" : ""}`}>
+          {MODEL_OPTIONS.map((m) => {
+            const checked = values.model.includes(m);
+            return (
+              <label key={m} className="multi__item">
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggleModel(m)}
+                  onBlur={() => onBlur("model")}
+                />
+                <span>{m}</span>
+              </label>
+            );
+          })}
+        </div>
+
+        {showError("model") && <div className="field__error">{errors.model}</div>}
       </div>
 
       <div className="field">

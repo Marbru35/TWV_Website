@@ -61,32 +61,6 @@
   font-weight: 600;
 }
 
-/* ✅ Für Label-Zeile "Modelle" + Button */
-.field__labelRow {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-/* Optional: Ghost Button (falls du keine btn--ghost Definition hast) */
-.contactSection .btn.btn--ghost {
-  background: transparent;
-  color: rgba(20, 28, 40, 0.78);
-  border: 1px solid rgba(20, 28, 40, 0.18);
-  border-radius: 10px;
-  line-height: 1;
-}
-
-.contactSection .btn.btn--ghost:hover {
-  background: rgba(20, 28, 40, 0.06);
-}
-
-.contactSection .btn.btn--ghost:active {
-  background: rgba(20, 28, 40, 0.10);
-}
-
 /* Inputs */
 .contactSection .input,
 .contactSection select,
@@ -129,44 +103,135 @@
 }
 
 /* =========================
-   ✅ Multi-Select (Checkboxen für Modelle)
+   ✅ Modelle Multi-Select – optisch wie Input
    ========================= */
 
+.field__labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.contactSection .btn.btn--ghost {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(30, 110, 255, 0.92);
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.contactSection .btn.btn--ghost:hover {
+  text-decoration: underline;
+}
+
+.contactSection .btn.btn--ghost:active {
+  transform: translateY(0.5px);
+}
+
 .multi {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  padding: 12px 14px;
+  background: #fff;
   border: 1px solid rgba(20, 28, 40, 0.14);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+
+  min-height: 48px;
 }
 
 .multi__item {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
-  color: rgba(20, 28, 40, 0.86);
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(20, 28, 40, 0.10);
+  background: rgba(20, 28, 40, 0.02);
+
+  font-size: 15px;
+  color: rgba(20, 28, 40, 0.88);
   user-select: none;
+  cursor: pointer;
+}
+
+.multi__item:hover {
+  background: rgba(20, 28, 40, 0.04);
+  border-color: rgba(20, 28, 40, 0.14);
 }
 
 .multi__item input[type="checkbox"] {
   width: 18px;
   height: 18px;
+  margin: 0;
   accent-color: #1e6eff;
+}
+
+.multi__item:has(input[type="checkbox"]:checked) {
+  background: rgba(30, 110, 255, 0.08);
+  border-color: rgba(30, 110, 255, 0.28);
 }
 
 .multi--error {
   border-color: rgba(255, 60, 60, 0.65);
-  box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.14);
 }
 
-@media (min-width: 980px) {
-  /* Auf großen Screens 2 Spalten, wirkt kompakter */
+@media (max-width: 700px) {
   .multi {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 18px;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   ✅ DESKTOP: KEIN Springen bei Fehlermeldungen
+   (weil Error-DIV nicht immer existiert -> Platz via Pseudo-Element)
+   ========================= */
+
+@media (min-width: 821px) {
+  /* jeder Field reserviert IMMER Platz für eine Error-Zeile */
+  .contactSection .field {
+    position: relative;
+    padding-bottom: 20px; /* reservierter Raum */
+  }
+
+  /* der echte Error sitzt immer am unteren Rand im reservierten Bereich */
+  .contactSection .field__error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;           /* keine zusätzlichen Sprünge */
+    min-height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   ✅ MOBILE: Platz NICHT reservieren
+   ========================= */
+
+@media (max-width: 820px) {
+  .contactSection .field {
+    padding-bottom: 0; /* kein Extra-Leerraum */
+    position: static;
+  }
+
+  .contactSection .field__error {
+    position: static;
+    margin-top: 6px;
+    min-height: 0;
+    line-height: 1.2;
+    font-size: 12px;
   }
 }
 
@@ -215,17 +280,6 @@
     padding: 10px 14px;
   }
 
-  /* ✅ Button/Label Zeile mobil sauber umbrechen */
-  .field__labelRow {
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .contactSection .btn.btn--ghost {
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-
   .form__sectionTitle {
     margin: 14px 0 8px;
     font-size: 12px;
@@ -235,15 +289,19 @@
     gap: 10px;
   }
 
-  /* ✅ Multi Box mobil etwas kompakter */
+  .contactSection .btn.btn--ghost {
+    font-size: 12px;
+  }
+
   .multi {
     padding: 10px 12px;
-    gap: 8px;
-    border-radius: 12px;
+    gap: 8px 10px;
+    border-radius: 14px;
   }
 
   .multi__item {
     font-size: 14px;
+    padding: 9px 10px;
   }
 
   .multi__item input[type="checkbox"] {
