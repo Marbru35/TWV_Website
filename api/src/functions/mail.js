@@ -50,6 +50,10 @@ app.http("mail", {
       const models = Array.isArray(data.model) ? data.model : (data.model ? [data.model] : []);
       const modelsText = models.length ? models.join(", ") : "-";
 
+      const eventFrom = formatDateDE(data.eventDateFrom);
+      const eventTo = formatDateDE(data.eventDateTo);
+      const eventRange = eventFrom || eventTo ? `${eventFrom || "-"} bis ${eventTo || "-"}` : "-";
+
       const subject = `Anfrage - TWV Viola (${models.length ? models[0] : "kein Modell"})`;
 
       const html = `
@@ -74,8 +78,9 @@ app.http("mail", {
         <h3>Eckdaten</h3>
         <ul>
           <li><b>Personenzahl:</b> ${escapeHtml(data.people || "-")}</li>
-          <li><b>Modelle:</b> ${escapeHtml(modelsText)}</li>
           <li><b>Anlass:</b> ${escapeHtml(data.occasion || "-")}</li>
+          <li><b>Veranstaltungsdatum:</b> ${escapeHtml(eventRange)}</li>
+          <li><b>Modelle:</b> ${escapeHtml(modelsText)}</li>
         </ul>
 
         <h3>Nachricht</h3>
@@ -114,6 +119,16 @@ app.http("mail", {
     }
   },
 });
+
+function formatDateDE(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (!Number.isFinite(d.getTime())) return "";
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = String(d.getFullYear());
+  return `${dd}.${mm}.${yyyy}`;
+}
 
 function escapeHtml(input) {
   return String(input ?? "")
