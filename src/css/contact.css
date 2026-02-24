@@ -62,6 +62,34 @@
 .contactSection textarea {
   font-size: 16px;
   padding: 12px 14px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+.contactSection .input[type="date"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  background-color: #fff;
+  color: rgba(20, 28, 40, 0.92);
+  font-variant-numeric: tabular-nums;
+  -webkit-text-size-adjust: 100%;
+}
+
+.contactSection .input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.contactSection .input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+}
+
+.contactSection .input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.7;
 }
 
 .contactSection .btn {
