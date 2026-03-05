@@ -36,7 +36,7 @@ const initial = {
 export default function ContactForm() {
   const [values, setValues] = useState(initial);
   const [touched, setTouched] = useState({});
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
   const [serverMsg, setServerMsg] = useState("");
 
   const errors = useMemo(() => validateContact(values), [values]);
@@ -154,7 +154,6 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Rechnungsadresse */}
       <div className="form__sectionTitle">Rechnungsadresse</div>
 
       <div className="grid grid--2">
