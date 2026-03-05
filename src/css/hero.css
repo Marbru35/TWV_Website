@@ -1,14 +1,15 @@
 /* =========================
-   HERO – zentriert & stabil + Parallax
+   HERO – Radical Dark Parallax
    ========================= */
 
 .hero {
   position: relative;
-  min-height: clamp(620px, 82vh, 900px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: #030712;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -22,23 +23,11 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-
-  background: radial-gradient(
-      900px 520px at 18% 22%,
-      rgba(30, 110, 255, 0.26),
-      transparent 60%
-    ),
-    radial-gradient(
-      900px 520px at 86% 18%,
-      rgba(255, 170, 120, 0.2),
-      transparent 58%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(10, 14, 24, 0.45) 0%,
-      rgba(10, 14, 24, 0.3) 45%,
-      rgba(10, 14, 24, 0.2) 100%
-    );
+  background: 
+    radial-gradient(circle at 70% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 40%),
+    linear-gradient(180deg, rgba(3, 7, 18, 0.8) 0%, rgba(3, 7, 18, 0.4) 50%, rgba(3, 7, 18, 1) 100%);
+  mix-blend-mode: multiply;
 }
 
 .heroCenter {
@@ -47,40 +36,40 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 .heroPanel {
   width: 100%;
-  max-width: 900px;
-  padding: 44px 48px;
-  border-radius: 26px;
+  max-width: 1100px;
+  padding: 80px;
+  border-radius: 40px;
 
-  background: rgba(0, 0, 0, 0.32);
-  backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  /* Ultra Premium Dark Glass */
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 100px -20px rgba(0, 0, 0, 1), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 
   text-align: center;
-  animation: fadeUp 520ms ease both;
 }
 
 /* =========================
-   Eyebrow Headline mit Linien
+   Eyebrow Headline
    ========================= */
 
 .heroKicker {
   display: inline-flex;
   align-items: center;
-  gap: 18px;
-  margin-bottom: 16px;
+  gap: 24px;
+  margin-bottom: 24px;
 
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--accent);
   font-size: 13px;
   line-height: 1.2;
 }
@@ -88,33 +77,20 @@
 .heroKicker::before,
 .heroKicker::after {
   content: "";
-  width: 60px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.35);
+  width: 80px;
+  height: 2px;
+  background: var(--accentGradient);
+  box-shadow: var(--glow);
 }
 
 @media (min-width: 980px) {
   .heroKicker {
     font-size: 15px;
-    letter-spacing: 2.4px;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
   }
-
   .heroKicker::before,
   .heroKicker::after {
-    width: 80px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .heroKicker {
-    font-size: 16px;
-    letter-spacing: 2.6px;
-  }
-
-  .heroKicker::before,
-  .heroKicker::after {
-    width: 100px;
+    width: 120px;
   }
 }
 
@@ -123,14 +99,15 @@
    ========================= */
 
 .heroPanel h1 {
-  margin: 0 0 22px;
-  font-size: clamp(40px, 5vw, 72px);
-  line-height: 1.05;
-  color: rgba(255, 255, 255, 0.96);
-
-  word-break: normal;
-  overflow-wrap: normal;
-  hyphens: none;
+  margin: 0 0 32px;
+  font-size: clamp(48px, 10vw, 120px);
+  line-height: 0.95;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom right, #ffffff 30%, #9ca3af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .heroTitleWord {
@@ -143,15 +120,18 @@
    ========================= */
 
 .heroLead {
-  margin: 0 0 30px;
-  font-size: 20px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.85);
+  margin: 0 auto 48px;
+  max-width: 720px;
+  font-size: 24px;
+  line-height: 1.6;
+  color: #d1d5db; /* Gray 300 */
+  font-weight: 300;
 }
 
 .heroActions {
   display: flex;
   justify-content: center;
+  gap: 20px;
 }
 
 /* =========================
@@ -159,86 +139,90 @@
    ========================= */
 
 .hero .btn {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.92);
-  padding: 14px 28px;
+  padding: 20px 48px;
   font-size: 18px;
-  border-radius: 999px;
-}
-
-.hero .btn:hover {
-  background: rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .hero .btn--primary {
-  background: rgba(30, 110, 255, 0.28);
-  border-color: rgba(30, 110, 255, 0.35);
-  padding: 16px 34px;
-  font-size: 19px;
-}
-
-.hero .btn--primary:hover {
-  background: rgba(30, 110, 255, 0.36);
-  border-color: rgba(30, 110, 255, 0.42);
+  padding: 24px 56px;
+  font-size: 20px;
 }
 
 /* =========================
-   Animation
+   Mobile
    ========================= */
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* =========================
-   Mobile Optimierung
-   ========================= */
-
-@media (max-width: 520px) {
+@media (max-width: 980px) {
   .heroPanel {
-    padding: 24px 18px;
+    padding: 60px 40px;
+    border-radius: 30px;
+  }
+  .heroLead {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroPanel {
+    padding: 40px 24px;
     border-radius: 20px;
+  }
+  .heroActions {
+    flex-direction: column;
+  }
+  .hero .btn, .hero .btn--primary {
+    width: 100%;
+    padding: 18px 32px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .hero--image {
+    background-position: center 80%; /* Fokus weiter unten auf das Toilettenwagen-Fahrgestell */
+  }
+  .heroCenter {
+    padding: 0 12px;
+  }
+  .heroPanel {
+    padding: 24px 16px; /* Deutlich kompakter */
   }
 
   .heroKicker {
-    font-size: 11px;
-    letter-spacing: 1.6px;
-    margin-bottom: 12px;
-    gap: 12px;
+    font-size: 10px;
+    margin-bottom: 16px;
+    gap: 8px;
   }
 
   .heroKicker::before,
   .heroKicker::after {
-    width: 36px;
+    width: 15px; /* Stark verkürzte Linien, damit das Wort auf eine Zeile passt */
   }
 
   .heroPanel h1 {
-    font-size: clamp(24px, 9vw, 34px);
-    margin-bottom: 14px;
-    line-height: 1.08;
+    font-size: clamp(32px, 10vw, 40px);
+    margin-bottom: 16px;
   }
 
   .heroLead {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 24px;
   }
 
   .hero .btn {
-    padding: 10px 16px;
     font-size: 14px;
+    padding: 12px 20px;
   }
 
   .hero .btn--primary {
-    padding: 11px 18px;
     font-size: 14px;
+    padding: 14px 24px;
   }
 }

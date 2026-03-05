@@ -61,20 +61,20 @@ export default function Hero() {
       <div className="hero__overlay" />
 
       <div className="heroCenter">
-        <div className="heroPanel heroPanel--white">
-          <div className="heroKicker">Toilettenwagenvermietung</div>
+        <div className="heroPanel heroPanel--white" data-reveal="fade">
+          <div className="heroKicker" data-reveal="up" data-delay="100">Toilettenwagenvermietung</div>
 
-          <h1 className="heroTitle">
+          <h1 className="heroTitle" data-reveal="up" data-delay="200">
             <span className="heroTitleWord">TWV</span>{" "}
             <span className="heroTitleWord">Viola</span>
           </h1>
 
-          <p className="heroLead">
+          <p className="heroLead" data-reveal="up" data-delay="300">
             Sauber, zuverlässig und unkompliziert: Anlieferung, Abholung,
             Erstausstattung und Endreinigung – alles aus einer Hand.
           </p>
 
-          <div className="heroActions">
+          <div className="heroActions" data-reveal="up" data-delay="400">
             <button
               className="btn btn--primary"
               onClick={() => scrollToId("kontakt", 92)}

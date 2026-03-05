@@ -9,6 +9,10 @@ import "./css/categories.css";
 import "./css/contact.css";
 
 import App from "./App.jsx";
+import { initScrollObserver } from "./utils/scrollObserver.js";
+
+// Initialize scroll animations
+initScrollObserver();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

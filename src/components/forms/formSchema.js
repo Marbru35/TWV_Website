@@ -37,6 +37,18 @@ export function validateContact(values) {
   // Anlass
   if (!values.occasion.trim()) errors.occasion = "Bitte Anlass angeben.";
 
+  // Datum
+  if (!values.eventDateFrom.trim()) errors.eventDateFrom = "Bitte Datum angeben.";
+  if (!values.eventDateTo.trim()) errors.eventDateTo = "Bitte Datum angeben.";
+
+  if (values.eventDateFrom && values.eventDateTo) {
+    const from = new Date(values.eventDateFrom);
+    const to = new Date(values.eventDateTo);
+    if (Number.isFinite(from.getTime()) && Number.isFinite(to.getTime())) {
+      if (to < from) errors.eventDateTo = "Enddatum muss nach dem Startdatum liegen.";
+    }
+  }
+
   // Nachricht
   if (!values.message.trim()) errors.message = "Bitte kurze Nachricht ergänzen.";
 

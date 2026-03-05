@@ -14,31 +14,16 @@ export default function Footer() {
   useEffect(() => {
     if (!isOpen) return;
 
-    if (panel === "datenschutz") {
-      footerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Wait for panel transition (0.3s) then scroll heading to just below sticky header
+    const HEADER_HEIGHT = 72;
+    const t = window.setTimeout(() => {
+      const el = panelTopRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 350);
 
-      const t = window.setTimeout(() => {
-        panelTopRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 120);
-
-      return () => window.clearTimeout(t);
-    }
-
-    if (panel === "impressum") {
-      footerRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-
-      const t = window.setTimeout(() => {
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: "smooth",
-        });
-      }, 180);
-
-      return () => window.clearTimeout(t);
-    }
+    return () => window.clearTimeout(t);
   }, [isOpen, panel]);
 
   return (

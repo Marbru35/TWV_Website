@@ -1,96 +1,101 @@
 .header {
-  position: sticky;
+  position: fixed; /* Fixed to sit over the parallax elegantly */
   top: 0;
+  width: 100%;
   z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.84);
-  border-bottom: 1px solid rgba(20, 28, 40, 0.12);
-  box-shadow: 0 10px 26px rgba(20, 28, 40, 0.08);
+  background: rgba(3, 7, 18, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 12px 30px rgba(20, 28, 40, 0.10);
+  background: rgba(3, 7, 18, 0.85);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(1440px, calc(100% - 120px));
+  width: min(1300px, calc(100% - 64px));
   margin-inline: auto;
-  padding: 20px 0;
+  padding: 24px 0;
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scrolled .inner {
+  padding: 16px 0;
 }
 
 .logo {
-  font-weight: 860;
-  letter-spacing: 0.2px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   background: transparent;
   border: 0;
-  color: var(--text);
-  font-size: 20px;
+  color: #fff;
+  font-size: 26px;
   cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .cta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
-.cta :global(.btn) {
-  padding: 16px 32px;
-  font-size: 15px;
-  font-weight: 700;
-  min-height: 50px;
-}
-
+/* Adjust layout buttons for header *specifically* so they aren't massive */
 .cta :global(.btn--primary) {
-  border: 2px solid rgba(30, 110, 255, 0.55);
-  background: rgba(30, 110, 255, 0.16);
-}
-
-.cta :global(.btn--primary:hover) {
-  background: rgba(30, 110, 255, 0.26);
-  border-color: rgba(30, 110, 255, 0.75);
-  box-shadow: 0 10px 24px rgba(30, 110, 255, 0.18);
-  transform: translateY(-1px);
+  padding: 14px 28px !important;
+  font-size: 16px !important;
 }
 
 @media (max-width: 768px) {
   .inner {
-    width: calc(100% - 32px);
-    padding: 12px 0;
+    width: calc(100% - 40px);
+    padding: 20px 0;
+  }
+
+  .scrolled .inner {
+    padding: 14px 0;
   }
 
   .logo {
-    font-size: 18px;
-  }
-
-  .cta :global(.btn) {
-    padding: 11px 16px;
-    font-size: 14px;
-    min-height: 40px;
+    font-size: 22px;
   }
 }
 
 @media (max-width: 420px) {
   .inner {
-    width: calc(100% - 26px);
-    padding: 10px 0;
+    width: calc(100% - 32px);
+    padding: 16px 0;
+  }
+  
+  .scrolled .inner {
+    padding: 12px 0;
   }
 
   .logo {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .cta {
-    gap: 8px;
+    gap: 12px;
   }
-
-  .cta :global(.btn) {
-    padding: 9px 12px;
-    font-size: 13px;
-    min-height: 36px;
+  
+  .cta :global(.btn--primary) {
+    padding: 12px 20px !important;
+    font-size: 14px !important;
   }
 }

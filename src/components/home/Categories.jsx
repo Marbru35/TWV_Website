@@ -68,7 +68,7 @@ export default function Categories() {
   return (
     <section className="toiletIntro--flat">
       <div className="container">
-        <div className="searchBlock--left">
+        <div className="searchBlock--left" data-reveal="up">
           <h2 className="searchTitle">Was suchen Sie?</h2>
           <p className="searchText">
             Ob autarker Toilettenwagen mit Frisch- und Abwassertank oder ein
@@ -77,14 +77,20 @@ export default function Categories() {
           </p>
         </div>
 
-        <h2 className="toiletIntroTitle">Unsere Toilettenwagen</h2>
+        <h2 className="toiletIntroTitle" data-reveal="up">Unsere Toilettenwagen</h2>
 
         <div className="toiletCategories--flat">
-          {models.map((m) => {
+          {models.map((m, index) => {
             const { pre, model } = splitTitleForModelLine(m.title);
+            const delay = (index % 4) * 100 + 100; // 100, 200, 300, 400
 
             return (
-              <article className="toiletCard--flat" key={m.slug}>
+              <article 
+                className="toiletCard--flat" 
+                key={m.slug} 
+                data-reveal="up" 
+                data-delay={delay}
+              >
                 <div className="toiletCardLayout">
                   <div className="toiletCardContent">
                     <h3>
@@ -180,22 +186,10 @@ export default function Categories() {
                     </>
                   ) : null}
                 </div>
-
-                <div className="twModalLead">{activeModel.lead}</div>
+                {/* lead text removed – only main title shown */}
               </div>
 
               <div className="twModalStage">
-                {activeModel.gallery.length > 1 && (
-                  <button
-                    className="twNav twPrev"
-                    type="button"
-                    onClick={prev}
-                    aria-label="Vorheriges Bild"
-                  >
-                    ‹
-                  </button>
-                )}
-
                 <img
                   className="twModalImg"
                   src={activeModel.gallery[activeIndex].src}
@@ -203,14 +197,24 @@ export default function Categories() {
                 />
 
                 {activeModel.gallery.length > 1 && (
-                  <button
-                    className="twNav twNext"
-                    type="button"
-                    onClick={next}
-                    aria-label="Nächstes Bild"
-                  >
-                    ›
-                  </button>
+                  <>
+                    <button
+                      className="twNav twPrev"
+                      type="button"
+                      onClick={prev}
+                      aria-label="Vorheriges Bild"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      className="twNav twNext"
+                      type="button"
+                      onClick={next}
+                      aria-label="Nächstes Bild"
+                    >
+                      ›
+                    </button>
+                  </>
                 )}
               </div>
 

@@ -20,13 +20,15 @@ const initial = {
   delCity: "",
 
   people: "",
+  occasion: "",
+  eventDateFrom: "",
+  eventDateTo: "",
+
   email: "",
   phone: "",
 
-  // ✅ Multi: Array statt String
   model: [],
 
-  occasion: "",
   message: "",
   consent: false,
 };
@@ -80,6 +82,8 @@ export default function ContactForm() {
 
       people: true,
       occasion: true,
+      eventDateFrom: true,
+      eventDateTo: true,
 
       model: true,
       message: true,
@@ -215,7 +219,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* ✅ Personenzahl + Anlass nebeneinander */}
+      {/* Personenzahl + Anlass nebeneinander */}
       <div className="grid grid--2">
         <Field
           label="Ungefähre Personenzahl"
@@ -241,7 +245,38 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* ✅ Modelle in eigener Zeile */}
+      {/* ✅ Veranstaltungsdatum von/bis nebeneinander (optisch wie restliches Grid) */}
+      <div className="grid grid--2">
+        <div className="field">
+          <label className="field__label">Veranstaltungsdatum (von)</label>
+          <input
+            className={`input input--date ${showError("eventDateFrom") ? "input--error" : ""}`}
+            type="date"
+            value={values.eventDateFrom}
+            onChange={(e) => setField("eventDateFrom", e.target.value)}
+            onBlur={() => onBlur("eventDateFrom")}
+          />
+          {showError("eventDateFrom") && (
+            <div className="field__error">{errors.eventDateFrom}</div>
+          )}
+        </div>
+
+        <div className="field">
+          <label className="field__label">Veranstaltungsdatum (bis)</label>
+          <input
+            className={`input input--date ${showError("eventDateTo") ? "input--error" : ""}`}
+            type="date"
+            value={values.eventDateTo}
+            onChange={(e) => setField("eventDateTo", e.target.value)}
+            onBlur={() => onBlur("eventDateTo")}
+          />
+          {showError("eventDateTo") && (
+            <div className="field__error">{errors.eventDateTo}</div>
+          )}
+        </div>
+      </div>
+
+      {/* Modelle */}
       <div className="field">
         <div className="field__labelRow">
           <label className="field__label">Modelle</label>
