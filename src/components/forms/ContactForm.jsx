@@ -324,17 +324,18 @@ export default function ContactForm() {
           <div className="field__error">{errors.message}</div>
         )}
       </div>
-
-      <label className="checkbox">
-        <input
-          type="checkbox"
-          checked={values.consent}
-          onChange={(e) => setField("consent", e.target.checked)}
-          onBlur={() => onBlur("consent")}
-        />
-        <span>Ich stimme der Verarbeitung meiner Daten gemäß Datenschutz zu.</span>
-      </label>
-      {showError("consent") && <div className="field__error">{errors.consent}</div>}
+      <div className="field field--consent">
+        <label className="checkbox">
+          <input
+            type="checkbox"
+            checked={values.consent}
+            onChange={(e) => setField("consent", e.target.checked)}
+            onBlur={() => onBlur("consent")}
+          />
+          <span>Ich stimme der Verarbeitung meiner Daten gemäß Datenschutz zu.</span>
+        </label>
+        {showError("consent") && <div className="field__error">{errors.consent}</div>}
+      </div>
 
       <div className="form__actions">
         <button className="btn" type="submit" disabled={status === "sending"}>

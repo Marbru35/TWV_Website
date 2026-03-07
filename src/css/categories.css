@@ -276,6 +276,29 @@
   transform: scale(1.1);
 }
 
+/* Desktop/Tablet: Typografie in den Category-Cards leicht vergroessern */
+@media (min-width: 641px) {
+  .toiletCard--flat h3 {
+    font-size: 52px;
+  }
+
+  .twInfoLabel {
+    font-size: 18px;
+  }
+
+  .twPill {
+    font-size: 18px;
+  }
+
+  .twNote {
+    font-size: 19px;
+  }
+
+  .twCheckList li {
+    font-size: 21px;
+  }
+}
+
 @media (max-width: 1200px) {
   .toiletCardLayout, .toiletCard--flat:nth-child(even) .toiletCardLayout {
     grid-template-columns: 1fr;

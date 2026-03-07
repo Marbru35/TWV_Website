@@ -43,7 +43,7 @@
 
 .contactSection .muted {
   color: #d1d5db;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .contactSection .container {
@@ -54,12 +54,17 @@
 }
 
 .contactHint {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   /* helles Hint-Panel */
   background: rgba(6, 182, 212, 0.08);
   border: 1px solid rgba(6, 182, 212, 0.18);
   border-left: 4px solid var(--accent);
+}
+
+/* spezifische Steuerung der Hinweis-Box (ueberschreibt .contactSection .card) */
+.contactSection .card.contactHint {
+  padding: 40px 45px;
 }
 
 /* =========================
@@ -78,7 +83,7 @@
     0 40px 80px -20px rgba(0, 0, 0, 0.6);
 
   border-radius: 32px;
-  padding: 64px;
+  padding: 65px;
   position: relative;
   overflow: hidden;
 }
@@ -108,6 +113,20 @@
   font-size: 18px;
   line-height: 1.7;
   color: rgba(15, 23, 42, 0.72);
+}
+
+.contactSection .contactFormCard .tiny {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-top: 18px;
+}
+
+.contactSection .field--consent {
+  margin-top: -10px;
+}
+
+.contactSection .contactFormCard .form__actions {
+  margin-top: -6px;
 }
 
 /* =========================
@@ -375,7 +394,7 @@
    ========================= */
 
 @media (max-width: 640px) {
-  .contactSection { padding: 100px 0; }
+  .contactSection { padding: 65px 0; }
 
   .contactSection .card {
     padding: 40px 24px;
@@ -384,6 +403,11 @@
 
   .contactHint {
     margin-bottom: 24px;
+  }
+
+  .contactSection .card.contactHint {
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 
   .contactSection h2 {
@@ -401,7 +425,31 @@
 
   .contactSection .btn {
     width: 100%;
-    padding: 18px;
+    padding: 14px;
+  }
+
+  /* Mobile: Consent-Bereich kompakter (Checkbox, Error, Button, Hinweis) */
+  .contactSection .form {
+    gap: 24px;
+  }
+
+  .contactSection .checkbox {
+    margin-top: -8px;
+  }
+
+  .contactSection .field--consent .field__error {
+    margin-top: -18px;
+    margin-bottom: -10px;
+  }
+
+  .contactSection .form__actions {
+    margin-top: 0;
+    gap: 12px;
+  }
+
+  .contactSection .contactFormCard .tiny {
+    margin-top: 14px;
+    font-size: 14px;
   }
 }
 
@@ -413,6 +461,10 @@
   .contactSection .card {
     padding: 32px 20px;
     border-radius: 20px;
+  }
+
+  .contactSection .card.contactHint {
+    padding: 16px 26px;
   }
 
   .contactSection .input,

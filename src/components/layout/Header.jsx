@@ -27,7 +27,7 @@ export default function Header() {
 
         <div className={styles.cta}>
           <button className="btn btn--primary" onClick={() => go("kontakt")}>
-            Anfrage
+            Kontakt
           </button>
         </div>
       </div>

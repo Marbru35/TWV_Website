@@ -1,4 +1,4 @@
-import ContactForm from "../forms/ContactForm";
+﻿import ContactForm from "../forms/ContactForm";
 import "../../css/contact.css";
 
 export default function ContactTeaser() {
@@ -7,7 +7,7 @@ export default function ContactTeaser() {
       <div className="container">
         <h2 data-reveal="up">Kontakt / Anfrage</h2>
         <p className="muted" data-reveal="up" data-delay="100">
-          Sende Daten, Ort und Anlass – wir melden uns mit einem Angebot.
+          Sende Daten, Ort und Anlass - wir melden uns mit einem Angebot.
         </p>
 
         <div className="card card--padded contactHint" data-reveal="up" data-delay="200">
@@ -18,14 +18,20 @@ export default function ContactTeaser() {
           </div>
         </div>
 
-        <div className="card card--padded contactFormCard" data-reveal="fade" data-delay="100">
+        <div
+          className="card card--padded contactFormCard"
+          data-reveal="fade"
+          data-delay="100"
+          data-reveal-early="true"
+        >
           <ContactForm />
-          <p className="tiny muted" style={{ marginTop: 10 }}>
+          <p className="tiny muted">
             Mit dem Absenden stimmst du der Verarbeitung deiner Daten gemäß
-            Datenschutz zu.
+            Datenschutzbestimmung zu.
           </p>
         </div>
       </div>
     </section>
   );
 }
+

@@ -82,7 +82,7 @@ export default function Categories() {
         <div className="toiletCategories--flat">
           {models.map((m, index) => {
             const { pre, model } = splitTitleForModelLine(m.title);
-            const delay = (index % 4) * 100 + 100; // 100, 200, 300, 400
+            const delay = (index % 4) * 100 + 100;
 
             return (
               <article 

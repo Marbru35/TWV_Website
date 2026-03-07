@@ -235,9 +235,6 @@ p { line-height: 1.8; margin: 0 0 20px; color: var(--muted); font-size: 18px; }
   transform: scale(0.97); /* gentle scale without blur */
 }
 
-/* Staggering delays - removed transition-delay to ensure smooth in/out symmetry, 
-   instead we'll rely on the cubic bezier for a smooth flow, but if we want delays 
-   they apply to the entering phase mainly. */
 [data-delay="100"] { transition-delay: 100ms; }
 [data-delay="200"] { transition-delay: 200ms; }
 [data-delay="300"] { transition-delay: 300ms; }
