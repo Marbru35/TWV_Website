@@ -89,7 +89,7 @@ app.http("mail", {
 
       const mailOptions = {
         from: "hobbitviola@gmail.com",
-        to: "marlon.spiess@outlook.com",
+        to: "twv-viola@web.de",
         subject,
         html,
         replyTo: data.email,

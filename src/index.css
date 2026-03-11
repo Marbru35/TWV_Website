@@ -243,6 +243,6 @@ p { line-height: 1.8; margin: 0 0 20px; color: var(--muted); font-size: 18px; }
 
 /* Cancel delay when leaving so it resets instantly and doesn't look laggy */
 [data-reveal]:not(.is-revealed) {
-  transition-delay: 0ms !important;
+  transition-delay: 0ms;
   transition-duration: 400ms; /* Fast exit */
 }

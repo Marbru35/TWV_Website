@@ -6,24 +6,9 @@
 export function initScrollObserver() {
   if (typeof IntersectionObserver === "undefined") return;
 
-  const EXIT_BUFFER_PX = 4;
-
   const onIntersect = (entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-revealed");
-      } else {
-        // Prevent flicker near viewport edges on slight scroll/UI resize changes.
-        const vh =
-          window.innerHeight || document.documentElement.clientHeight || 0;
-        const rect = entry.boundingClientRect;
-        const isClearlyOutside =
-          rect.bottom <= -EXIT_BUFFER_PX || rect.top >= vh + EXIT_BUFFER_PX;
-
-        if (isClearlyOutside) {
-          entry.target.classList.remove("is-revealed");
-        }
-      }
+      entry.target.classList.toggle("is-revealed", entry.isIntersecting);
     });
   };
 
