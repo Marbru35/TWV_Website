@@ -11,13 +11,9 @@ const MODEL_OPTIONS = [
 const initial = {
   name: "",
 
-  billStreet: "",
-  billZip: "",
-  billCity: "",
-
-  delStreet: "",
-  delZip: "",
-  delCity: "",
+  addrStreet: "",
+  addrZip: "",
+  addrCity: "",
 
   people: "",
   occasion: "",
@@ -72,13 +68,9 @@ export default function ContactForm() {
       email: true,
       phone: true,
 
-      billStreet: true,
-      billZip: true,
-      billCity: true,
-
-      delStreet: true,
-      delZip: true,
-      delCity: true,
+      addrStreet: true,
+      addrZip: true,
+      addrCity: true,
 
       people: true,
       occasion: true,
@@ -154,65 +146,31 @@ export default function ContactForm() {
         />
       </div>
 
-      <div className="form__sectionTitle">Rechnungsadresse</div>
-
       <div className="grid grid--2">
         <Field
           label="Straße / Hausnummer"
-          value={values.billStreet}
-          onChange={(v) => setField("billStreet", v)}
-          onBlur={() => onBlur("billStreet")}
-          error={showError("billStreet")}
+          value={values.addrStreet}
+          onChange={(v) => setField("addrStreet", v)}
+          onBlur={() => onBlur("addrStreet")}
+          error={showError("addrStreet")}
           placeholder="Musterstraße 1"
         />
 
         <div className="grid grid--2 grid--tight">
           <Field
             label="PLZ"
-            value={values.billZip}
-            onChange={(v) => setField("billZip", v)}
-            onBlur={() => onBlur("billZip")}
-            error={showError("billZip")}
+            value={values.addrZip}
+            onChange={(v) => setField("addrZip", v)}
+            onBlur={() => onBlur("addrZip")}
+            error={showError("addrZip")}
             placeholder="12345"
           />
           <Field
             label="Ort"
-            value={values.billCity}
-            onChange={(v) => setField("billCity", v)}
-            onBlur={() => onBlur("billCity")}
-            error={showError("billCity")}
-            placeholder="Musterstadt"
-          />
-        </div>
-      </div>
-
-      <div className="form__sectionTitle">Lieferadresse (wo der Wagen hin soll)</div>
-
-      <div className="grid grid--2">
-        <Field
-          label="Straße / Hausnummer"
-          value={values.delStreet}
-          onChange={(v) => setField("delStreet", v)}
-          onBlur={() => onBlur("delStreet")}
-          error={showError("delStreet")}
-          placeholder="Musterstraße 1"
-        />
-
-        <div className="grid grid--2 grid--tight">
-          <Field
-            label="PLZ"
-            value={values.delZip}
-            onChange={(v) => setField("delZip", v)}
-            onBlur={() => onBlur("delZip")}
-            error={showError("delZip")}
-            placeholder="12345"
-          />
-          <Field
-            label="Ort"
-            value={values.delCity}
-            onChange={(v) => setField("delCity", v)}
-            onBlur={() => onBlur("delCity")}
-            error={showError("delCity")}
+            value={values.addrCity}
+            onChange={(v) => setField("addrCity", v)}
+            onBlur={() => onBlur("addrCity")}
+            error={showError("addrCity")}
             placeholder="Musterstadt"
           />
         </div>

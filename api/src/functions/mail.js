@@ -63,16 +63,10 @@ app.http("mail", {
         <p><b>E-Mail:</b> ${escapeHtml(data.email)}</p>
         <p><b>Telefon:</b> ${escapeHtml(data.phone)}</p>
 
-        <h3>Rechnungsadresse</h3>
+        <h3>Adresse</h3>
         <p>
-          ${escapeHtml(data.billStreet || "-")}<br/>
-          ${escapeHtml(data.billZip || "-")} ${escapeHtml(data.billCity || "-")}
-        </p>
-
-        <h3>Lieferadresse</h3>
-        <p>
-          ${escapeHtml(data.delStreet || "-")}<br/>
-          ${escapeHtml(data.delZip || "-")} ${escapeHtml(data.delCity || "-")}
+          ${escapeHtml(data.addrStreet || "-")}<br/>
+          ${escapeHtml(data.addrZip || "-")} ${escapeHtml(data.addrCity || "-")}
         </p>
 
         <h3>Eckdaten</h3>

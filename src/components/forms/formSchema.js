@@ -1,4 +1,4 @@
-﻿export function validateContact(values) {
+export function validateContact(values) {
   const errors = {};
   const str = (v) => (typeof v === "string" ? v.trim() : "");
   const setRequired = (key, msg) => {
@@ -8,12 +8,9 @@
   const requiredTextFields = [
     ["name", "Bitte Name angeben."],
     ["phone", "Bitte Handynummer angeben."],
-    ["billStreet", "Bitte Straße/Hausnummer angeben."],
-    ["billZip", "Bitte PLZ angeben."],
-    ["billCity", "Bitte Ort angeben."],
-    ["delStreet", "Bitte Straße/Hausnummer angeben."],
-    ["delZip", "Bitte PLZ angeben."],
-    ["delCity", "Bitte Ort angeben."],
+    ["addrStreet", "Bitte Straße/Hausnummer angeben."],
+    ["addrZip", "Bitte PLZ angeben."],
+    ["addrCity", "Bitte Ort angeben."],
     ["people", "Bitte Personenzahl angeben."],
     ["occasion", "Bitte Anlass angeben."],
     ["message", "Bitte kurze Nachricht ergänzen."],
@@ -27,14 +24,9 @@
     errors.email = "Bitte gültige E-Mail angeben.";
   }
 
-  const billZip = str(values.billZip);
-  if (!errors.billZip && !/^\d{4,5}$/.test(billZip)) {
-    errors.billZip = "Bitte gültige PLZ angeben.";
-  }
-
-  const delZip = str(values.delZip);
-  if (!errors.delZip && !/^\d{4,5}$/.test(delZip)) {
-    errors.delZip = "Bitte gültige PLZ angeben.";
+  const addrZip = str(values.addrZip);
+  if (!errors.addrZip && !/^\d{4,5}$/.test(addrZip)) {
+    errors.addrZip = "Bitte gültige PLZ angeben.";
   }
 
   const people = str(values.people);
