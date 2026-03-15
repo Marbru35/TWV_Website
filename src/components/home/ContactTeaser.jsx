@@ -20,9 +20,8 @@ export default function ContactTeaser() {
 
         <div
           className="card card--padded contactFormCard"
-          data-reveal="fade"
+          data-reveal="up"
           data-delay="100"
-          data-reveal-early="true"
         >
           <ContactForm />
           <p className="tiny muted">

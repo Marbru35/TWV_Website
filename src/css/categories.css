@@ -24,7 +24,7 @@
 }
 
 .toiletIntro--flat .container {
-  max-width: 1300px;
+  max-width: 1500px;
   width: calc(100% - 48px);
   margin: 0 auto;
   position: relative;
@@ -32,7 +32,7 @@
 }
 
 .searchBlock--left {
-  max-width: 800px;
+  max-width: 1500px;
   margin: 0 0 100px;
   text-align: left;
 }
