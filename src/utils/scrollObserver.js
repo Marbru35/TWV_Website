@@ -1,56 +1,64 @@
 /**
- * Global IntersectionObserver for scroll animations.
- * Add the 'data-reveal' attribute to any element you want to animate on scroll.
- * Example: <div data-reveal="up">...</div>
+ * Scroll-reveal observer.
+ * – One-shot per element (no re-hide on scroll-up).
+ * – Uses a MutationObserver to catch React-rendered elements (React renders
+ *   asynchronously AFTER initScrollObserver() is called in main.jsx).
+ * – Respects prefers-reduced-motion.
  */
 export function initScrollObserver() {
   if (typeof IntersectionObserver === "undefined") return;
 
-  const onIntersect = (entries) => {
-    entries.forEach((entry) => {
-      entry.target.classList.toggle("is-revealed", entry.isIntersecting);
-    });
-  };
+  // Honour reduced-motion: reveal everything immediately, skip all observers.
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  const observer = new IntersectionObserver(onIntersect, {
-    root: null,
-    rootMargin: "0px 0px -10% 0px", // Trigger slightly before the bottom
-    threshold: 0.1,
-  });
-
-  const earlyObserver = new IntersectionObserver(onIntersect, {
-    root: null,
-    rootMargin: "0px 0px 8% 0px", // Trigger a bit earlier, but not too early
-    threshold: 0.05,
-  });
-
-  const elements = document.querySelectorAll("[data-reveal]");
-  elements.forEach((el) => {
-    const useEarlyObserver = el.getAttribute("data-reveal-early") === "true";
-    (useEarlyObserver ? earlyObserver : observer).observe(el);
-  });
-
-  // Also setup a mutation observer to catch dynamically added elements (like React rendering in chunks)
-  const mutationObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === 1) {
-          // Element node
-          if (node.hasAttribute("data-reveal")) {
-            const useEarlyObserver =
-              node.getAttribute("data-reveal-early") === "true";
-            (useEarlyObserver ? earlyObserver : observer).observe(node);
-          }
-          const nested = node.querySelectorAll("[data-reveal]");
-          nested.forEach((el) => {
-            const useEarlyObserver =
-              el.getAttribute("data-reveal-early") === "true";
-            (useEarlyObserver ? earlyObserver : observer).observe(el);
-          });
-        }
+  if (reducedMotion) {
+    // We still need the MutationObserver so future elements are also revealed.
+    const mo = new MutationObserver(() => {
+      document.querySelectorAll("[data-reveal]:not(.is-revealed)").forEach((el) => {
+        el.classList.add("is-revealed");
       });
     });
+    mo.observe(document.body, { childList: true, subtree: true });
+    return;
+  }
+
+  // ── Single IntersectionObserver (one-shot) ──────────────────────────────
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          io.unobserve(entry.target); // never re-hide
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: "0px 0px -6% 0px",
+      threshold: 0,
+    }
+  );
+
+  function observe(el) {
+    io.observe(el);
+  }
+
+  // Observe any elements already in the DOM (for SSR or rare cases).
+  document.querySelectorAll("[data-reveal]").forEach(observe);
+
+  // ── MutationObserver — required because React renders after this call ───
+  // Kept lean: only watches added nodes, does NOT re-trigger on class changes.
+  const mo = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node.nodeType !== 1) continue; // skip text nodes
+        if (node.hasAttribute("data-reveal")) observe(node);
+        node.querySelectorAll("[data-reveal]").forEach(observe);
+      }
+    }
   });
 
-  mutationObserver.observe(document.body, { childList: true, subtree: true });
+  mo.observe(document.body, { childList: true, subtree: true });
 }

@@ -82,14 +82,11 @@ export default function Categories() {
         <div className="toiletCategories--flat">
           {models.map((m, index) => {
             const { pre, model } = splitTitleForModelLine(m.title);
-            const delay = (index % 4) * 100 + 100;
 
             return (
               <article 
                 className="toiletCard--flat" 
                 key={m.slug} 
-                data-reveal="up" 
-                data-delay={delay}
               >
                 <div className="toiletCardLayout">
                   <div className="toiletCardContent">

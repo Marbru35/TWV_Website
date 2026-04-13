@@ -61,7 +61,7 @@ export default function Hero() {
       <div className="hero__overlay" />
 
       <div className="heroCenter">
-        <div className="heroPanel heroPanel--white" data-reveal="fade">
+        <div className="heroPanel heroPanel--white">
           <div className="heroKicker" data-reveal="up" data-delay="100">Toilettenwagenvermietung</div>
 
           <h1 className="heroTitle" data-reveal="up" data-delay="200">

@@ -198,51 +198,29 @@ p { line-height: 1.8; margin: 0 0 20px; color: var(--muted); font-size: 18px; }
 }
 
 /* =========================
-   Advanced Scroll Animations (RE-TRIGGERING)
+   Scroll Animations (one-shot, enter only)
    ========================= */
 
-/* Base invisible state for reveal elements */
 [data-reveal] {
   opacity: 0;
-  visibility: hidden;
   transition-property: opacity, transform;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  transition-duration: 600ms; /* slightly faster for snappier feel */
-  will-change: opacity, transform;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  transition-duration: 550ms;
 }
 
-/* Revealed state (triggered by JS IntersectionObserver) */
+[data-reveal="up"]    { transform: translateY(24px); }
+[data-reveal="left"]  { transform: translateX(24px); }
+[data-reveal="right"] { transform: translateX(-24px); }
+[data-reveal="fade"]  { transform: scale(0.98); }
+
 [data-reveal].is-revealed {
   opacity: 1;
-  visibility: visible;
   transform: none;
 }
 
-/* Specific reveal styles */
-[data-reveal="up"] {
-  transform: translateY(40px); /* reduced distance, no blur, no scale */
-}
-
-[data-reveal="left"] {
-  transform: translateX(40px);
-}
-
-[data-reveal="right"] {
-  transform: translateX(-40px);
-}
-
-[data-reveal="fade"] {
-  transform: scale(0.97); /* gentle scale without blur */
-}
-
-[data-delay="100"] { transition-delay: 100ms; }
-[data-delay="200"] { transition-delay: 200ms; }
-[data-delay="300"] { transition-delay: 300ms; }
-[data-delay="400"] { transition-delay: 400ms; }
-[data-delay="500"] { transition-delay: 500ms; }
-
-/* Cancel delay when leaving so it resets instantly and doesn't look laggy */
-[data-reveal]:not(.is-revealed) {
-  transition-delay: 0ms;
-  transition-duration: 400ms; /* Fast exit */
-}
+/* Staggered delays — only active when entering */
+[data-reveal].is-revealed[data-delay="100"] { transition-delay: 80ms; }
+[data-reveal].is-revealed[data-delay="200"] { transition-delay: 160ms; }
+[data-reveal].is-revealed[data-delay="300"] { transition-delay: 240ms; }
+[data-reveal].is-revealed[data-delay="400"] { transition-delay: 320ms; }
+[data-reveal].is-revealed[data-delay="500"] { transition-delay: 400ms; }
