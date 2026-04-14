@@ -33,7 +33,7 @@
 
 .searchBlock--left {
   max-width: 1500px;
-  margin: 0 0 100px;
+  margin: 0 0 80px;
   text-align: left;
 }
 
@@ -223,7 +223,7 @@
 }
 
 .toiletCardActions {
-  margin-top: 48px;
+  margin-top: 40px;
 }
 
 .toiletBtn {
@@ -386,7 +386,7 @@
     font-size: 24px;
   }
   .twCheckList li {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 

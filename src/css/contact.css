@@ -45,6 +45,8 @@
   color: #d1d5db;
   font-size: 22px;
 }
+@media (max-width: 640px) { .contactSection .muted { font-size: 18px; } }
+@media (max-width: 420px) { .contactSection .muted { font-size: 16px; } }
 
 .contactSection .container {
   width: min(1500px, calc(100% - 48px));
@@ -225,7 +227,7 @@
 
 .form__sectionTitle {
   margin: 40px 0 24px;
-  font-size: 22px;
+  font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 800;
   color: #0b1220;
 }
@@ -423,6 +425,7 @@
   .contactSection .btn {
     width: 100%;
     padding: 14px;
+    font-size: 16px;
   }
 
   /* Mobile: Consent-Bereich kompakter (Checkbox, Error, Button, Hinweis) */

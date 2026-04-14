@@ -170,6 +170,9 @@
     padding: 40px 24px;
     border-radius: 20px;
   }
+  .heroLead {
+    font-size: 18px;
+  }
   .heroActions {
     flex-direction: column;
   }
@@ -195,7 +198,7 @@
   }
 
   .heroKicker {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 16px;
     gap: 8px;
   }
@@ -222,7 +225,7 @@
   }
 
   .hero .btn--primary {
-    font-size: 12px;
-    padding: 14px 24px;
+    font-size: 15px;
+    padding: 14px 28px;
   }
 }
