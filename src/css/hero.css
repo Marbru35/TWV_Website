@@ -172,12 +172,13 @@
   }
   .heroKicker {
     font-size: 11px;
-    gap: 12px;
+    gap: 0;
     margin-bottom: 16px;
+    letter-spacing: 0.18em;
   }
   .heroKicker::before,
   .heroKicker::after {
-    width: 28px;
+    display: none;
   }
   .heroLead {
     font-size: 18px;
@@ -187,8 +188,8 @@
   }
   .hero .btn, .hero .btn--primary {
     width: 100%;
-    padding: 16px 28px;
-    font-size: 16px;
+    padding: 14px 24px;
+    font-size: 15px;
   }
 }
 
