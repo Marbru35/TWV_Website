@@ -98,7 +98,7 @@ export const models = [
   },
   {
     slug: "urinal-turm-4",
-    title: "Urinalturm 4",
+    title: "Urinalturm – Modell 4",
     lead: "Ein Urinal Turm mit 4 Urinalen.",
 
 
