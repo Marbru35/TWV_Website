@@ -133,15 +133,17 @@ export default function Categories() {
                       </div>
                     )}
 
-                    <div className="toiletCardActions">
-                      <button
-                        className="toiletBtn"
-                        type="button"
-                        onClick={() => openModel(m.slug)}
-                      >
-                        Details ansehen
-                      </button>
-                    </div>
+                    {m.gallery.length > 1 && (
+                      <div className="toiletCardActions">
+                        <button
+                          className="toiletBtn"
+                          type="button"
+                          onClick={() => openModel(m.slug)}
+                        >
+                          Details ansehen
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="toiletCardImage" aria-hidden="true">
