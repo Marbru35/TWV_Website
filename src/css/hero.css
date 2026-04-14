@@ -170,6 +170,15 @@
     padding: 40px 24px;
     border-radius: 20px;
   }
+  .heroKicker {
+    font-size: 11px;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .heroKicker::before,
+  .heroKicker::after {
+    width: 28px;
+  }
   .heroLead {
     font-size: 18px;
   }
@@ -178,7 +187,8 @@
   }
   .hero .btn, .hero .btn--primary {
     width: 100%;
-    padding: 18px 32px;
+    padding: 16px 28px;
+    font-size: 16px;
   }
 }
 

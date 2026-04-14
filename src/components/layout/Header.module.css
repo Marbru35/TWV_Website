@@ -76,6 +76,13 @@
   }
 }
 
+@media (max-width: 640px) {
+  .cta :global(.btn--primary) {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+}
+
 @media (max-width: 420px) {
   .inner {
     width: calc(100% - 32px);
