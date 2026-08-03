@@ -5,7 +5,6 @@ import nonAutark313_3 from "../assets/nonAutark313/non_autark_313_3.jpeg";
 import nonAutark313_4 from "../assets/nonAutark313/non_autark_313_4.jpeg";
 import nonAutark313_5 from "../assets/nonAutark313/non_autark_313_5.jpeg";
 import nonAutark313_6 from "../assets/nonAutark313/non_autark_313_6.jpeg";
-import nonAutark313_7 from "../assets/nonAutark313/non_autark_313_7.jpeg";
 
 // Nicht-autark Modell 1-1-1
 import nonAutark111_1 from "../assets/nonAutark111/non_autark_111_1.jpeg";
@@ -45,7 +44,6 @@ export const models = [
       { src: nonAutark313_4, alt: "Toilettenwagen 3-1-3" },
       { src: nonAutark313_5, alt: "Toilettenwagen 3-1-3" },
       { src: nonAutark313_6, alt: "Toilettenwagen 3-1-3" },
-      { src: nonAutark313_7, alt: "Toilettenwagen 3-1-3" },
     ],
   },
   {
