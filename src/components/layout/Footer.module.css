@@ -13,8 +13,7 @@
 }
 
 .barInner {
-  max-width: 1440px;
-  width: calc(100% - 120px);
+  width: var(--shell);
   margin: 0 auto;
 
   display: flex;
@@ -111,8 +110,7 @@
 }
 
 .panelInner {
-  max-width: 1440px;
-  width: calc(100% - 120px);
+  width: var(--shell);
   margin: 0 auto;
 }
 
@@ -144,7 +142,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* min(): sonst bleibt die Spalte auf sehr schmalen Handys 300px breit
+     und schiebt den Inhalt über den Bildschirmrand */
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 40px;
   font-size: 18px;
   line-height: 1.75;
@@ -212,11 +212,6 @@
 }
 
 @media (max-width: 980px) {
-  .barInner,
-  .panelInner {
-    width: calc(100% - 48px);
-  }
-
   .grid,
   .legal {
     font-size: 17px;
@@ -230,10 +225,6 @@
     gap: 12px;
   }
 
-  .panelInner {
-    width: calc(100% - 36px);
-  }
-
   .grid {
     gap: 28px;
   }
@@ -245,11 +236,6 @@
 
 @media (max-width: 420px) {
   .bar { padding: 28px 0 22px; }
-
-  .barInner,
-  .panelInner {
-    width: calc(100% - 26px);
-  }
 
   .left { gap: 10px; flex-wrap: wrap; }
 

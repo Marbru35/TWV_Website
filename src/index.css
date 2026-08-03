@@ -24,6 +24,21 @@
 
   --t: 180ms;
   --t2: 320ms;
+
+  /* Ein Innenmaß für Header, Sections und Footer – damit die Spalten
+     auf jeder Breite aufeinander stehen. Desktop wie bisher: 1440/120. */
+  --gutter: 120px;
+  --shell: min(1440px, calc(100% - var(--gutter)));
+}
+
+@media (max-width: 1024px) {
+  :root { --gutter: 64px; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 34px; }
+}
+@media (max-width: 420px) {
+  :root { --gutter: 26px; }
 }
 
 * { box-sizing: border-box; }
@@ -49,13 +64,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 640px) { .section { padding: 58px 0; } }
 @media (max-width: 420px) { .section { padding: 46px 0; } }
 
-.container { width: min(1320px, calc(100% - 64px)); margin: 0 auto; }
-@media (max-width: 640px) {
-  .container { width: calc(100% - 32px); }
-}
-@media (max-width: 420px) {
-  .container { width: calc(100% - 26px); }
-}
+.container { width: var(--shell); margin: 0 auto; }
 
 .grid { display: grid; gap: 16px; }
 .grid--2 { grid-template-columns: 1fr; }
@@ -164,7 +173,8 @@ p { line-height: 1.6; margin: 0 0 12px; }
 
 @media (max-width: 420px) {
   .form { gap: 10px; }
-  .input { padding: 10px 11px; border-radius: 12px; font-size: 14px; }
+  /* 16px: darunter zoomt iOS Safari beim Antippen in das Feld hinein */
+  .input { padding: 10px 11px; border-radius: 12px; font-size: 16px; }
   .field__label { font-size: 12px; }
   .form__actions { gap: 8px; }
   .form__hint { font-size: 12px; }

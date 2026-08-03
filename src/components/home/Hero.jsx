@@ -77,7 +77,7 @@ export default function Hero() {
           <div className="heroActions">
             <button
               className="btn btn--primary"
-              onClick={() => scrollToId("kontakt", 92)}
+              onClick={() => scrollToId("kontakt")}
             >
               Anfrage senden
             </button>

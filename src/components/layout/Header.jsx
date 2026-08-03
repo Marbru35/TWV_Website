@@ -12,10 +12,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const go = (id) => scrollToId(id, 92);
+  const go = (id) => scrollToId(id);
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+    <header
+      data-sticky-header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}
+    >
       <div className={styles.inner}>
         <button
           className={styles.logo}

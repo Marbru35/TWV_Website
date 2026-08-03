@@ -13,7 +13,7 @@
 }
 
 .contactSection .container {
-  width: min(1440px, calc(100% - 120px));
+  width: var(--shell);
   margin-inline: auto;
 }
 
@@ -247,10 +247,6 @@
 }
 
 @media (max-width: 520px) {
-  .contactSection .container {
-    width: calc(100% - 34px);
-  }
-
   .contactSection {
     font-size: 14px;
     line-height: 1.55;
@@ -279,10 +275,11 @@
     font-size: 12px;
   }
 
+  /* 16px: darunter zoomt iOS Safari beim Antippen in das Feld hinein */
   .contactSection .input,
   .contactSection select,
   .contactSection textarea {
-    font-size: 14px;
+    font-size: 16px;
     padding: 10px 12px;
   }
 
@@ -322,10 +319,6 @@
 }
 
 @media (max-width: 420px) {
-  .contactSection .container {
-    width: calc(100% - 26px);
-  }
-
   .contactHint {
     margin-bottom: 10px;
   }

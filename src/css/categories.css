@@ -9,8 +9,7 @@
 }
 
 .toiletIntro--flat .container {
-  max-width: 1440px;
-  width: calc(100% - 120px);
+  width: var(--shell);
   margin: 0 auto;
 }
 
@@ -37,7 +36,9 @@
 }
 
 .toiletIntroTitle {
-  font-size: 45px;
+  /* skaliert mit, damit die Zwischenzeile auf mittleren Breiten nicht
+     größer wirkt als die Überschrift darüber */
+  font-size: clamp(28px, 3.4vw, 45px);
   line-height: 1.1;
   margin: 0 0 28px;
   letter-spacing: -0.2px;
@@ -292,10 +293,6 @@
    ========================= */
 
 @media (max-width: 520px) {
-  .toiletIntro--flat .container {
-    width: calc(100% - 34px);
-  }
-
   .toiletIntro--flat {
     padding: 46px 0;
   }
@@ -397,10 +394,6 @@
 }
 
 @media (max-width: 420px) {
-  .toiletIntro--flat .container {
-    width: calc(100% - 26px);
-  }
-
   .toiletIntro--flat .container .searchBlock--left h2 {
     padding-left: 5px;
     padding-top: 10px;
@@ -446,9 +439,18 @@
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
   position: relative;
+
+  /* Feste Höhe statt min-height auf der Bühne: so passt das Fenster auch
+     auf niedrige und quer gehaltene Screens, ohne oben/unten zu kappen.
+     Kopf und Thumbnails behalten ihre Höhe, das Bild schrumpft mit. */
+  height: min(92vh, 1000px);
+  height: min(92dvh, 1000px);
+  display: flex;
+  flex-direction: column;
 }
 
 .twModalHeader {
+  flex: none;
   padding: 32px 36px 22px;
   border-bottom: 1px solid rgba(20, 28, 40, 0.08);
 }
@@ -490,12 +492,16 @@
   justify-content: center;
   align-items: center;
   padding: 32px;
-  min-height: 72vh;
+
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .twModalImg {
   max-width: 100%;
-  max-height: calc(72vh - 64px);
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
 }
 
@@ -520,6 +526,7 @@
 }
 
 .twThumbRow {
+  flex: none;
   padding: 22px 24px 26px;
   display: flex;
   gap: 14px;
@@ -529,6 +536,7 @@
 }
 
 .twThumb {
+  flex: none;
   width: 120px;
   height: 80px;
   border-radius: 14px;
@@ -597,11 +605,6 @@
 
   .twModalStage {
     padding: 14px;
-    min-height: 56vh;
-  }
-
-  .twModalImg {
-    max-height: calc(56vh - 28px);
   }
 
   .twNav {
@@ -640,7 +643,6 @@
 
   .twModalStage {
     padding: 12px;
-    min-height: 54vh;
   }
 
   .twThumbRow {
