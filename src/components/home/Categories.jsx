@@ -163,10 +163,6 @@ export default function Categories() {
                     <span className="toiletCardImage__badge" aria-hidden="true">
                       {shots > 1 ? `${shots} Bilder` : "1 Bild"}
                     </span>
-
-                    <span className="toiletCardImage__zoom" aria-hidden="true">
-                      Vergrößern
-                    </span>
                   </button>
                 </div>
               </article>

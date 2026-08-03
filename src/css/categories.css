@@ -275,44 +275,9 @@
   color: rgba(255, 255, 255, 0.94);
 }
 
-.toiletCardImage__zoom {
-  position: absolute;
-  left: 50%;
-  bottom: 14px;
-  transform: translate(-50%, 8px);
-
-  padding: 9px 16px;
-  border-radius: 999px;
-
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(0, 0, 128, 0.2);
-  color: rgba(0, 0, 128, 0.9);
-
-  font-size: 14px;
-  font-weight: 750;
-
-  opacity: 0;
-  transition: opacity 340ms cubic-bezier(0.2, 0.7, 0.3, 1),
-    transform 340ms cubic-bezier(0.2, 0.7, 0.3, 1);
-}
-
 .toiletCardImage:hover img,
 .toiletCardImage:focus-visible img {
   transform: scale(1.045);
-}
-
-.toiletCardImage:hover .toiletCardImage__zoom,
-.toiletCardImage:focus-visible .toiletCardImage__zoom {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* Touch: Hinweis dauerhaft sichtbar, kein Hover vorhanden */
-@media (hover: none) {
-  .toiletCardImage__zoom {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
 }
 
 /* Auf schmalen Screens zuerst das Foto zeigen */
@@ -428,12 +393,6 @@
     left: 10px;
     padding: 5px 10px;
     font-size: 12px;
-  }
-
-  .toiletCardImage__zoom {
-    bottom: 10px;
-    padding: 8px 14px;
-    font-size: 13px;
   }
 }
 
