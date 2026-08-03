@@ -134,22 +134,30 @@ export default function Categories() {
                       </div>
                     )}
 
-                    <div className="toiletCardActions">
-                      <button
-                        className="toiletBtn"
-                        type="button"
-                        onClick={() => openModel(m.slug)}
-                      >
-                        {shots > 1 ? `Galerie ansehen (${shots})` : "Bild ansehen"}
-                      </button>
-                    </div>
+                    {/* Bei nur einem Bild braucht es keinen Galerie-Button –
+                        das Vorschaubild selbst ist klickbar. */}
+                    {shots > 1 && (
+                      <div className="toiletCardActions">
+                        <button
+                          className="toiletBtn"
+                          type="button"
+                          onClick={() => openModel(m.slug)}
+                        >
+                          Galerie ansehen ({shots})
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <button
                     className="toiletCardImage"
                     type="button"
                     onClick={() => openModel(m.slug)}
-                    aria-label={`${m.title}: Galerie öffnen`}
+                    aria-label={
+                      shots > 1
+                        ? `${m.title}: Galerie öffnen`
+                        : `${m.title}: Bild vergrößern`
+                    }
                   >
                     <img
                       src={cover.src}
