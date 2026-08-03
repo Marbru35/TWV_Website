@@ -82,6 +82,8 @@ export default function Categories() {
         <div className="toiletCategories--flat">
           {models.map((m) => {
             const { pre, model } = splitTitleForModelLine(m.title);
+            const cover = m.gallery[0];
+            const shots = m.gallery.length;
 
             return (
               <article className="toiletCard--flat" key={m.slug}>
@@ -97,6 +99,8 @@ export default function Categories() {
                         </>
                       ) : null}
                     </h3>
+
+                    {m.lead && <p>{m.lead}</p>}
 
                     {Array.isArray(m.requires) && m.requires.length > 0 && (
                       <div className="twInfoBlock">
@@ -136,14 +140,34 @@ export default function Categories() {
                         type="button"
                         onClick={() => openModel(m.slug)}
                       >
-                        Details ansehen
+                        {shots > 1 ? `Galerie ansehen (${shots})` : "Bild ansehen"}
                       </button>
                     </div>
                   </div>
 
-                  <div className="toiletCardImage" aria-hidden="true">
-                    <img src={m.gallery[0].src} alt={m.gallery[0].alt} />
-                  </div>
+                  <button
+                    className="toiletCardImage"
+                    type="button"
+                    onClick={() => openModel(m.slug)}
+                    aria-label={`${m.title}: Galerie öffnen`}
+                  >
+                    <img
+                      src={cover.src}
+                      alt={cover.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+
+                    <span className="toiletCardImage__shade" aria-hidden="true" />
+
+                    <span className="toiletCardImage__badge" aria-hidden="true">
+                      {shots > 1 ? `${shots} Bilder` : "1 Bild"}
+                    </span>
+
+                    <span className="toiletCardImage__zoom" aria-hidden="true">
+                      Vergrößern
+                    </span>
+                  </button>
                 </div>
               </article>
             );
