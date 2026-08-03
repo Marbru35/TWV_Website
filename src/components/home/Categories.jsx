@@ -156,6 +156,9 @@ export default function Categories() {
                       alt={cover.alt}
                       loading="lazy"
                       decoding="async"
+                      style={
+                        cover.focus ? { objectPosition: cover.focus } : undefined
+                      }
                     />
 
                     <span className="toiletCardImage__shade" aria-hidden="true" />
