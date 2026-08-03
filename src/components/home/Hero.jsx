@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { scrollToId } from "../../utils/scrollToId";
-import heroBg from "../../assets/hero-bg2.png";
+import heroBg from "../../assets/hero-bg.jpg";
 
 export default function Hero() {
   const heroRef = useRef(null);

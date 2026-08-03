@@ -16,7 +16,7 @@ import autark111_1 from "../assets/autark111/autark_111_1.jpeg";
 import autark111_2 from "../assets/autark111/autark_111_2.jpeg";
 
 // Urinal Turm 4
-import urinalTurm4_1 from "../assets/urinalTurm4/urinal_turm_4.png";
+import urinalTurm4_1 from "../assets/urinalTurm4/urinal_turm_4.jpg";
 
 export const models = [
   {
