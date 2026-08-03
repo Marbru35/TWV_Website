@@ -171,9 +171,11 @@ export default function Categories() {
 
                     <span className="toiletCardImage__shade" aria-hidden="true" />
 
-                    <span className="toiletCardImage__badge" aria-hidden="true">
-                      {shots > 1 ? `${shots} Bilder` : "1 Bild"}
-                    </span>
+                    {shots > 1 && (
+                      <span className="toiletCardImage__badge" aria-hidden="true">
+                        {shots} Bilder
+                      </span>
+                    )}
                   </button>
                 </div>
               </article>
